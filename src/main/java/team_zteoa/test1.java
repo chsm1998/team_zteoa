@@ -2,6 +2,6 @@ package team_zteoa;
 
 public class test1 {
 	public test1() {
-		System.out.println("ddd测试");
+		System.out.println("测试");
 	}
 }
