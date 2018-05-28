@@ -1,4 +1,4 @@
-package com.yhzl.zetoa.test;
+package com.three.zetoa.test;
 
 import org.junit.Test;
 import org.mybatis.spring.SqlSessionFactoryBean;
