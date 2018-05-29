@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team_zteoa.dao.zteoa_boardroom.BoardroomMapper">
+	<!-- 会议室的总数量 -->
+	<select id="getBorardroomCount" resultType="int">
+		select count(1) as count from zteoa_boardroom
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="name !='' and name != null">
+				and name LIKE CONCAT ('%',#{name},'%')
+			</if>
+			<if test="address !='' and address != null">
+				and address = #{address}	
+			</if>
+		</trim>		 
+	</select>
+	<!-- 会议室的列表 -->
+	<select id="getBorardroomList" resultType="Boardroom">
+		select * from zteoa_boardroom
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="name != '' and name != null">
+				and name LIKE CONCAT ('%',#{name},'%')
+			</if>
+			<if test="address !='' and address != null">
+				and address = #{address}	
+			</if>
+			order by create_time DESC limit #{currentPageNo},#{pageSize}
+		</trim>
+	</select>
+	<!-- 会议室的增加 -->
+	<insert id="addBoardroom" parameterType="Boardroom">
+		insert into zteoa_boardroom(name,address,is_use,create_time)
+		values(#{name},#{address},#{is_use},#{create_time})
+	</insert>
+	<!-- 会议室的删除 -->
+	<delete id="deleteBoardroom" parameterType="int">
+		delete from zteoa_boardroom where id=#{id}
+	</delete>
+	<!-- 会议室的修改 -->
+	<update id="updateBoardroom" parameterType="Boardroom">
+		update zteoa_boardroom
+		<trim suffix="where id = #{id}" prefix="set" prefixOverrides="" suffixOverrides=",">
+			<if test="name!=null">name = #{name},</if>
+			<if test="address!=null">address = #{address},</if>
+			<if test="is_use!=null">is_use = #{is_use},</if>
+			<if test="modify_time!=null">modify_time = #{modify_time},</if>
+		</trim>
+	</update>
+	<!-- 根据id查询会议室 -->
+	<select id="getBoardroomById" parameterType="int" resultType="Boardroom">
+		select * from zteoa_boardroom
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</trim>		
+	</select>
+	<!-- 会议室名称验证 -->
+	<select id="getBoardroomName" resultType="Boardroom">
+		select * from zteoa_boardroom
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="name !='' and name = !=null">
+				name = #{name}
+			</if>
+		</trim>
+	</select>
+</mapper>
