@@ -1,4 +1,4 @@
-package com.three.zteoa.dao;
+package com.three.zteoa.mapper;
 
 import java.util.List;
 

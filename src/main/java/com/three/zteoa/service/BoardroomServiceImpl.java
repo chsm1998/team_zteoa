@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.three.zteoa.bean.Boardroom;
-import com.three.zteoa.dao.BoardroomMapper;
+import com.three.zteoa.mapper.BoardroomMapper;
 @Service
 public class BoardroomServiceImpl implements BoardroomService{
 	@Resource
