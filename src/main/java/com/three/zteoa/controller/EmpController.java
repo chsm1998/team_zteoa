@@ -2,6 +2,8 @@ package com.three.zteoa.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +53,21 @@ public class EmpController {
 	@RequestMapping("/isRegister")
 	public boolean isRegister(String username) {
 		return !empService.isRegister(username);
+	}
+	
+	@RequestMapping("/isLogin")
+	public boolean isLogin(HttpSession session) {
+		return session.getAttribute("empSession") != null;
+	}
+	
+	@RequestMapping("/login")
+	public boolean login(@RequestBody Emp emp, HttpSession session) {
+		if (empService.login(emp)) {
+			emp = empService.queryByUsername(emp.getUsername());
+			session.setAttribute("empSession", emp);
+			return true;
+		}
+		return false;
 	}
 
 }

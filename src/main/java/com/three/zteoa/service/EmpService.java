@@ -38,7 +38,7 @@ public class EmpService {
 	public boolean login(Emp emp) {
 		EmpExample example = new EmpExample();
 		example.createCriteria().andUsernameEqualTo(emp.getUsername()).andPasswordEqualTo(emp.getPassword());
-		return ToBoolean.isNotNull(empMapper.selectByExample(example));
+		return empMapper.selectByExample(example).size() != 0;
 	}
 
 	/**
@@ -51,6 +51,18 @@ public class EmpService {
 		EmpExample example = new EmpExample();
 		example.createCriteria().andUsernameEqualTo(username);
 		return empMapper.selectByExample(example).size() != 0;
+	}
+
+	/**
+	 * 通过用户名获取员工信息
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public Emp queryByUsername(String username) {
+		EmpExample example = new EmpExample();
+		example.createCriteria().andUsernameEqualTo(username);
+		return empMapper.selectByExample(example).get(0);
 	}
 
 	/**
