@@ -19,6 +19,7 @@ public class ProductCategoryController {
 	// ��ѯ��Ʒ���
 	@RequestMapping("/queryAll")
 	public List<ProductCategory> getpCategory(ProductCategory pc) {
+		System.out.println("test");
 		return productCategoryMapper.getProductCategory(pc);
 	}
 
