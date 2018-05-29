@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.three.zteoa.mapper.ReceiveMapper">
+
+	<resultMap type="Receive" id="ReceiveList">
+		<result property="id" column="id" />
+		<result property="eid" column="eid" />
+		<result property="pid" column="pid" />
+		<result property="num" column="num" />
+		<result property="category" column="category" />
+		<result property="reason" column="reason" />
+	</resultMap>
+
+	<!-- 1、添加办公用品申请 -->
+	<insert id="add" parameterType="Receive">
+		INSERT INTO zteoa_receive (id,eid,pid,num,category,reason,create_time,modify_time)
+				VALUES (#{id},#{eid},#{pid},#{num},#{category},#{reason},#{create_time},#{modify_time})
+	</insert>
+	
+	<!-- 2、通过id删除办公用品申请 -->
+	<delete id="delectReceiveById" parameterType="Integer">
+		delect from zteoa_receive where id=#{id}
+	</delete>
+	
+	<update id="modify" parameterType="Receive">
+		update zteoa_receive
+			<trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+				<if test="id != null">id=#{id},</if>
+				<if test="eid != null">eid=#{eid},</if>
+				<if test="pid != null">pid=#{pid},</if>
+				<if test="num != null">num=#{num},</if>
+				<if test="category != null">category=#{category},</if>
+				<if test="reason != null">reason=#{reason},</if>
+				<if test="modify_time != null">modify_time=#{modify_time},</if>
+			</trim>
+	</update>
+</mapper>
