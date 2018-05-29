@@ -9,48 +9,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.three.zteoa.Mapper.ProductMapper;
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
+import com.three.zteoa.mapper.ProductMapper;
 
 @RestController
-public class productController {
+public class ProductController {
 	@Resource
 	private ProductMapper productMapper;
-	
+
 	@RequestMapping("/queryAll")
-	//²é¿´ËùÓÐÉÌÆ·
+	// ï¿½é¿´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
 	public List<Product> queryAll(Product product) {
 		return productMapper.getProductList(product);
 	}
-	
-	//Ìí¼ÓÉÌÆ·
+
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
 	@RequestMapping("/Add")
 	public int Add(Product product) {
 		return productMapper.addProduct(product);
 	}
-	
-	//ÐÞ¸ÄÉÌÆ·
+
+	// ï¿½Þ¸ï¿½ï¿½ï¿½Æ·
 	@RequestMapping("/Modify")
 	public int Modify(Product product) {
 		return productMapper.modifyProduct(product);
 	}
-	
-	//É¾³ýÉÌÆ·
+
+	// É¾ï¿½ï¿½ï¿½ï¿½Æ·
 	@RequestMapping("/Delete")
 	public int Delete(Integer id) {
 		return productMapper.deleteProduct(id);
 	}
-	
-	//Í³¼ÆÉÌÆ·ÊýÁ¿
+
+	// Í³ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping("/Count")
-	public int Count(Integer num,String name) {
+	public int Count(Integer num, String name) {
 		return productMapper.getCount(num, name);
 	}
-	
-	//²éÑ¯ÉÌÆ·Àà±ðid
+
+	// ï¿½ï¿½Ñ¯ï¿½ï¿½Æ·ï¿½ï¿½ï¿½id
 	@RequestMapping("/pcid")
-	public List<ProductCategory> getpcById(Integer id){
+	public List<ProductCategory> getpcById(Integer id) {
 		return productMapper.selectpcById(id);
 	}
 }

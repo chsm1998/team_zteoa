@@ -4,54 +4,51 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.three.zteoa.Mapper.ProductCategoryMapper;
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
-
+import com.three.zteoa.mapper.ProductCategoryMapper;
 
 @RestController
-public class productCategoryController {
+public class ProductCategoryController {
 	@Resource
 	private ProductCategoryMapper productCategoryMapper;
-	
-	//²éÑ¯ÉÌÆ·Àà±ð
+
+	// ï¿½ï¿½Ñ¯ï¿½ï¿½Æ·ï¿½ï¿½ï¿½
 	@RequestMapping("/queryAll")
 	public List<ProductCategory> getpCategory(ProductCategory pc) {
 		return productCategoryMapper.getProductCategory(pc);
 	}
-	
-	//Ìí¼ÓÉÌÆ·Àà±ð
-	@RequestMapping("/Add")
+
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½
+	@RequestMapping("/add")
 	public int Add(ProductCategory pc) {
 		return productCategoryMapper.addProductCategory(pc);
 	}
-	
-	//ÐÞ¸ÄÉÌÆ·Àà±ð
-	@RequestMapping("/Modify")
+
+	// ï¿½Þ¸ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½
+	@RequestMapping("/modify")
 	public int Modify(ProductCategory pc) {
 		return productCategoryMapper.modifyProductCategory(pc);
 	}
-	
-	//É¾³ýÉÌÆ·Àà±ð
-	@RequestMapping("/Delete")
+
+	// É¾ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½
+	@RequestMapping("/delete")
 	public int Delete(Integer id) {
 		return productCategoryMapper.deleteProductCategory(id);
 	}
-	//²éÑ¯ÉÌÆ·
+
+	// ï¿½ï¿½Ñ¯ï¿½ï¿½Æ·
 	@RequestMapping("/queryAll")
-	public List<Product> getProductById(Integer id){
+	public List<Product> getProductById(Integer id) {
 		return productCategoryMapper.getProductById(id);
 	}
-	
-	//Í³¼ÆÉÌÆ·Àà±ðÊýÁ¿
-	@RequestMapping("/Count")
-	public int Count(Integer id){
+
+	// Í³ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	@RequestMapping("/count")
+	public int Count(Integer id) {
 		return productCategoryMapper.getCount(id);
 	}
 }

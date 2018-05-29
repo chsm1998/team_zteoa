@@ -1,57 +1,64 @@
 package com.three.zteoa.tools;
 
 public class PageSupport {
-	//µ±Ç°Ò³ÂëÒÀÀµ×ÔÓÚÓÃ»§µÄÊäÈë
-	private int currentPageNo =1;
-	//×ÜÊýÁ¿
-	private int totalCount =0;
-	//Ò³ÃæÈÝÁ¿
-	private int pageSize=0;
-	//×ÜÒ³Êý
-	private int totalPageCount =1;
-	
+	// ï¿½ï¿½Ç°Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int currentPageNo = 1;
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int totalCount = 0;
+	// Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int pageSize = 0;
+	// ï¿½ï¿½Ò³ï¿½ï¿½
+	private int totalPageCount = 1;
+
 	public int getCurrentPageNo() {
 		return currentPageNo;
 	}
+
 	public void setCurrentPageNo(int currentPageNo) {
-		if(currentPageNo>0) {
-		this.currentPageNo = currentPageNo;
+		if (currentPageNo > 0) {
+			this.currentPageNo = currentPageNo;
 		}
 	}
+
 	public int getTotalCount() {
 		return totalCount;
 	}
+
 	public void setTotalCount(int totalCount) {
-		if(totalCount>0) {
-		this.totalCount = totalCount;
-		//ÉèÖÃ×ÜÒ³Êý
-		this.setTotal();
+		if (totalCount > 0) {
+			this.totalCount = totalCount;
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½
+			this.setTotal();
 		}
 	}
+
 	public int getPageSize() {
 		return pageSize;
 	}
+
 	public void setPageSize(int pageSize) {
-		if(pageSize>0) {
-		this.pageSize = pageSize;
+		if (pageSize > 0) {
+			this.pageSize = pageSize;
 		}
 	}
+
 	public int getTotalPageCount() {
 		return totalPageCount;
 	}
+
 	public void setTotalPageCount(int totalPageCount) {
-		
+
 		this.totalPageCount = totalPageCount;
 	}
-	
-	//ÉèÖÃ×ÜÒ³Êý
+
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½
 	public void setTotal() {
-		if(this.totalCount % this.pageSize==0) {
-			this.totalPageCount=this.totalCount/this.pageSize;
-		}else if(this.totalCount % this.pageSize>0){
-			this.totalPageCount=this.totalCount/this.pageSize+1;
-		}else {
-			this.totalPageCount=0;
+		if (this.totalCount % this.pageSize == 0) {
+			this.totalPageCount = this.totalCount / this.pageSize;
+		} else if (this.totalCount % this.pageSize > 0) {
+			this.totalPageCount = this.totalCount / this.pageSize + 1;
+		} else {
+			this.totalPageCount = 0;
 		}
 	}
 }
