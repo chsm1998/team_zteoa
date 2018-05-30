@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.Emp;
+import com.three.zteoa.bean.Position;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.EmpService;
+import com.three.zteoa.service.PositionService;
+import com.three.zteoa.vo.UpdateVo;
 
 @RestController
 @RequestMapping("/emp")
@@ -20,15 +24,29 @@ public class EmpController {
 
 	@Autowired
 	private EmpService empService;
+	@Autowired
+	private PositionService positionService;
 
 	@PostMapping("/add")
-	public boolean add(@RequestBody Emp emp) {
-		return empService.register(emp);
+	public UpdateVo add(@RequestBody Emp updateEmp, HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		Position position = positionService.queryById(updateEmp.getPid());
+		UpdateVo updateVo = SecurityComponent.isUpdateAuthority(emp, position.getName());
+		if (updateVo.isBl()) {
+			return empService.register(updateEmp);
+		}
+		return updateVo;
 	}
 
 	@PostMapping("/update")
-	public boolean update(@RequestBody Emp emp) {
-		return empService.update(emp);
+	public UpdateVo update(@RequestBody Emp updateEmp, HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		updateEmp = empService.queryByUsername(updateEmp.getUsername());
+		UpdateVo updateVo = SecurityComponent.isUpdateAuthority(emp, updateEmp.getPosition().getName());
+		if (updateVo.isBl()) {
+			return empService.update(emp);
+		}
+		return updateVo;
 	}
 
 	@GetMapping("/delete")
@@ -46,7 +64,6 @@ public class EmpController {
 
 	@RequestMapping("/queryTotal")
 	public long queryTotal(@RequestBody(required = false) Emp emp) {
-		System.out.println(emp);
 		return empService.getCount(emp);
 	}
 
@@ -54,12 +71,12 @@ public class EmpController {
 	public boolean isRegister(String username) {
 		return !empService.isRegister(username);
 	}
-	
+
 	@RequestMapping("/isLogin")
 	public boolean isLogin(HttpSession session) {
 		return session.getAttribute("empSession") != null;
 	}
-	
+
 	@RequestMapping("/login")
 	public boolean login(@RequestBody Emp emp, HttpSession session) {
 		if (empService.login(emp)) {
@@ -68,6 +85,33 @@ public class EmpController {
 			return true;
 		}
 		return false;
+	}
+
+	@RequestMapping("/getEmp")
+	public Emp getEmp(HttpSession session) {
+		return (Emp) session.getAttribute("empSession");
+	}
+
+	@RequestMapping("/exit")
+	public boolean exit(HttpSession session) {
+		session.removeAttribute("empSession");
+		return true;
+	}
+
+	/**
+	 * 验证更新权限
+	 * 
+	 * @param updateEmp
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(@RequestBody(required = false) Emp updateEmp, HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		if (updateEmp != null) {
+			updateEmp = empService.queryByUsername(updateEmp.getUsername());
+		}
+		return SecurityComponent.isAuthority(emp, updateEmp);
 	}
 
 }

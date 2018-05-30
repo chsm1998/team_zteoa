@@ -2,14 +2,18 @@ package com.three.zteoa.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.Dept;
+import com.three.zteoa.bean.Emp;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.DeptService;
-import com.three.zteoa.vo.DeleteVo;
+import com.three.zteoa.vo.UpdateVo;
 
 @RestController
 @RequestMapping("/dept")
@@ -39,7 +43,7 @@ public class DeptController {
 	}
 
 	@RequestMapping("/delete")
-	public DeleteVo delete(Integer id) {
+	public UpdateVo delete(Integer id) {
 		return deptService.delete(id);
 	}
 
@@ -51,6 +55,12 @@ public class DeptController {
 	@RequestMapping("/queryByName")
 	public boolean queryByName(String name) {
 		return deptService.queryByName(name);
+	}
+	
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return SecurityComponent.isAuthorityDept(emp);
 	}
 
 }

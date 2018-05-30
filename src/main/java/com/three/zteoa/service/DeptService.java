@@ -15,7 +15,7 @@ import com.three.zteoa.mapper.DeptMapper;
 import com.three.zteoa.mapper.EmpMapper;
 import com.three.zteoa.util.PageUtil;
 import com.three.zteoa.util.ToBoolean;
-import com.three.zteoa.vo.DeleteVo;
+import com.three.zteoa.vo.UpdateVo;
 
 @Service
 public class DeptService {
@@ -59,16 +59,16 @@ public class DeptService {
 	 * @return
 	 */
 	@Transactional
-	public DeleteVo delete(Integer id) {
+	public UpdateVo delete(Integer id) {
 		EmpExample empExample = new EmpExample();
 		empExample.createCriteria().andDidEqualTo(id);
 		if (empMapper.selectByExample(empExample).size() != 0) {
-			return new DeleteVo("该部门存在员工禁止删除", false);
+			return new UpdateVo("该部门存在员工禁止删除", false);
 		}
 		if (ToBoolean.intToBool(deptMapper.deleteByPrimaryKey(id), 1)) {
-			return new DeleteVo("删除成功", true);
+			return new UpdateVo("删除成功", true);
 		}
-		return new DeleteVo("服务器异常，删除失败", false);
+		return new UpdateVo("服务器异常，删除失败", false);
 	}
 
 	/**

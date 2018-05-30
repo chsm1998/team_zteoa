@@ -17,6 +17,7 @@ import com.three.zteoa.mapper.EmpMapper;
 import com.three.zteoa.mapper.PositionMapper;
 import com.three.zteoa.util.PageUtil;
 import com.three.zteoa.util.ToBoolean;
+import com.three.zteoa.vo.UpdateVo;
 
 @Service
 @Transactional
@@ -60,9 +61,9 @@ public class EmpService {
 	 * @return
 	 */
 	public Emp queryByUsername(String username) {
-		EmpExample example = new EmpExample();
-		example.createCriteria().andUsernameEqualTo(username);
-		return empMapper.selectByExample(example).get(0);
+		Emp emp = new Emp();
+		emp.setUsername(username);
+		return getEmps(emp).get(0);
 	}
 
 	/**
@@ -71,11 +72,15 @@ public class EmpService {
 	 * @param emp
 	 * @return true：成功，false：失败
 	 */
-	public boolean register(Emp emp) {
+	public UpdateVo register(Emp emp) {
 		Date time = new Date();
 		emp.setCreateTime(time);
 		emp.setModifyTime(time);
-		return empMapper.insert(emp) == 1;
+		UpdateVo updateVo = new UpdateVo("添加失败，服务器异常", false);
+		if (empMapper.insert(emp) == 1) {
+			updateVo = new UpdateVo("添加成功", true);
+		}
+		return updateVo;
 	}
 
 	/**
@@ -84,9 +89,13 @@ public class EmpService {
 	 * @param emp
 	 * @return
 	 */
-	public boolean update(Emp emp) {
+	public UpdateVo update(Emp emp) {
 		emp.setModifyTime(new Date());
-		return ToBoolean.intToBool(empMapper.updateByPrimaryKeySelective(emp), 1);
+		UpdateVo updateVo = new UpdateVo("更新员工信息失败", false);
+		if (empMapper.updateByPrimaryKeySelective(emp) == 1) {
+			updateVo = new UpdateVo("更新员工信息成功", true);
+		}
+		return updateVo;
 	}
 
 	/**
