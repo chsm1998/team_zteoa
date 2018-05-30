@@ -11,46 +11,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
-import com.three.zteoa.mapper.ProductMapper;
+import com.three.zteoa.service.ProductService;
+
 
 @RestController
 public class ProductController {
 	@Resource
-	private ProductMapper productMapper;
+	private ProductService productService ;
 
 	@RequestMapping("/queryAll")
-	// �鿴������Ʒ
-	public List<Product> queryAll(Product product) {
-		return productMapper.getProductList(product);
+	//查看所有商品
+	public List<Product> queryAll(Product product) throws Exception {
+		return productService.getProductList(product);
 	}
 
-	// �����Ʒ
 	@RequestMapping("/Add")
-	public int Add(Product product) {
-		return productMapper.addProduct(product);
+	//添加商品 
+	public boolean Add(Product product,Integer id) throws Exception {
+		return productService.addProduct(product, id);
 	}
 
-	// �޸���Ʒ
+	
 	@RequestMapping("/Modify")
-	public int Modify(Product product) {
-		return productMapper.modifyProduct(product);
+	//修改商品 
+	public boolean Modify(Product product) throws Exception {
+		return productService.modifyProduct(product);
 	}
 
-	// ɾ����Ʒ
 	@RequestMapping("/Delete")
-	public int Delete(Integer id) {
-		return productMapper.deleteProduct(id);
+	//删除商品 
+	public boolean Delete(Integer id) throws Exception {
+		return productService.deleteProduct(id);
 	}
 
-	// ͳ����Ʒ����
 	@RequestMapping("/Count")
-	public int Count(Integer num, String name) {
-		return productMapper.getCount(num, name);
+	//统计商品数量 
+	public int Count(Integer num, String name) throws Exception {
+		return productService.getCount(num, name);
 	}
 
-	// ��ѯ��Ʒ���id
 	@RequestMapping("/pcid")
-	public List<ProductCategory> getpcById(Integer id) {
-		return productMapper.selectpcById(id);
+	// 查询商品类别id
+	public List<ProductCategory> getpcById(Integer id) throws Exception {
+		return productService.selectpcById(id);
 	}
 }

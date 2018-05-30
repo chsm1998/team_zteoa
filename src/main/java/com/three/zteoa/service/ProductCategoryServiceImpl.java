@@ -10,12 +10,13 @@ import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
 import com.three.zteoa.mapper.ProductCategoryMapper;
 
+
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 	@Resource
 	private ProductCategoryMapper productCategoryMapper;
 
-	// �鿴��Ʒ����
+	//查看商品类别表
 	public List<ProductCategory> getProductCategory(ProductCategory pc) throws Exception {
 		List<ProductCategory> p_categorylist = null;
 		try {
@@ -26,50 +27,50 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return p_categorylist;
 	}
 
-	// �����Ʒ���
-	public int AddProductCategory(ProductCategory pc) throws Exception {
-		int result = 0;
+	//添加商品类别
+	public boolean AddProductCategory(ProductCategory pc) throws Exception {
+		boolean flag=false;
 		try {
-			result = productCategoryMapper.addProductCategory(pc);
+			flag = productCategoryMapper.addProductCategory(pc);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return flag;
 	}
 
-	// �޸���Ʒ���
-	public int ModifyProductCategory(ProductCategory pc, Integer id) throws Exception {
-		int result = 0;
+	//修改商品类别
+	public boolean ModifyProductCategory(ProductCategory pc, Integer id) throws Exception {
+		boolean flag=false;
 		try {
 			List<Product> productlist = productCategoryMapper.getProductById(id);
 			if (productlist.size() > 0) {
-				System.out.println("�޷��޸�");
+				System.out.println("存在外键关联商品无法修改");
 			} else {
-				result = productCategoryMapper.modifyProductCategory(pc);
+				flag = productCategoryMapper.modifyProductCategory(pc);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return flag;
 	}
 
-	// ɾ����Ʒ���
-	public int DeleteProductCategory(Integer id) throws Exception {
-		int result = 0;
+	//删除商品类别
+	public boolean DeleteProductCategory(Integer id) throws Exception {
+		boolean flag=false;
 		try {
 			List<Product> productlist = productCategoryMapper.getProductById(id);
 			if (productlist.size() > 0) {
-				System.out.println("�޷�ɾ��");
+				System.out.println("存在外键关联商品无法删除");
 			} else {
-				result = productCategoryMapper.deleteProductCategory(id);
+				flag = productCategoryMapper.deleteProductCategory(id);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return flag;
 	}
 
-	// ��ѯ��Ʒ
+	//查询商品
 	public List<Product> getProductById(Integer id) throws Exception {
 		List<Product> productlist = null;
 		try {
@@ -80,8 +81,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return productlist;
 	}
 
-	// ͳ����Ʒ�������
-	public int getcount(Integer id) {
+	//统计商品类别数量
+	public int getcount(Integer id)throws Exception {
 		int result = 0;
 		try {
 			result = productCategoryMapper.getCount(id);

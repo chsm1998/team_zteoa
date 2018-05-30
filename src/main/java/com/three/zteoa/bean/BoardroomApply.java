@@ -54,5 +54,4 @@ public class BoardroomApply {
 		this.modify_time = modify_time;
 	}
 	
-	
 }
