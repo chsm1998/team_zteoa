@@ -15,13 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!--修改商品-->
-	<update id="modifyProduct" parameterType="int">
+	<update id="modifyProduct" parameterType="Product">
 		UPDATE zteoa_product
 		<trim prefix="set" suffix="where id=#{id}" suffixOverrides=",">
 			<if test="name!=null and name!=''">name=#{name},</if>
 			<if test="price!=null">price=#{price},</if>
 			<if test="num!=null">num=#{num},</if>
-			<if test="modify_time!=null and  modify_time!=''">modify_time=#{modify_time}</if>
+			<if test="modify_time!=null and  modify_time!=''">modify_time=#{modify_time},</if>
 		</trim>
 	</update>
 	

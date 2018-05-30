@@ -4,16 +4,16 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-//ÉÌÆ·Àà±ğ±í
+//å•†å“ç±»åˆ«è¡¨
 public class ProductCategory {
 	private Integer id;		
-	private String category;	//ÉÌÆ·Àà±ğÃû³Æ
-	//¶ÔÈÕÆÚ¸ñÊ½µÄÉèÖÃ
+	private String category;	//å•†å“ç±»åˆ«åç§°
+	//å¯¹æ—¥æœŸæ ¼å¼çš„è®¾ç½®
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date create_time;   //´´½¨Ê±¼ä
-	//¶ÔÈÕÆÚ¸ñÊ½µÄÉèÖÃ
+	private Date create_time;   // åˆ›å»ºæ—¶é—´
+	//å¯¹æ—¥æœŸæ ¼å¼çš„è®¾ç½®
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date modify_time;	//ĞŞ¸ÄÊ±¼ä
+	private Date modify_time;	// ä¿®æ”¹æ—¶é—´
 	public Integer getId() {
 		return id;
 	}
