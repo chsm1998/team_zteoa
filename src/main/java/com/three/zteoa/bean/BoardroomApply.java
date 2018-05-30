@@ -7,7 +7,7 @@ import java.util.Date;
  * @author bin
  *
  */
-public class Boardroom_apply {
+public class BoardroomApply {
 	private int id;
 	private Date start; //开始时间
 	private Date end;  //结束时间

@@ -6,7 +6,7 @@ import java.util.Date;
  * 会议室设施
  * @author bin
  */
-public class Boardroom_facilities {
+public class BoardroomFacilities {
 	private int id;//
 	private int pid; //设施id,与用品表外键关联 
 	private int num;  //设施数量

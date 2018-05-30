@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.three.zteoa.Mapper.ProductCategoryMapper">
 	
 	<!--查看商品类别表  -->
-	<select id="getProduct_category" resultType="Product_category">
+	<select id="getProduct_category" resultType="ProductCategory">
 		select * from zteoa_product_category where 1=1
 		<if test="category!=null and category!=''">and category=#{category}</if>
 	</select>

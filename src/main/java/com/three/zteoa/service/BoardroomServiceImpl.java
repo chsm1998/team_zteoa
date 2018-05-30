@@ -69,5 +69,4 @@ public class BoardroomServiceImpl implements BoardroomService{
 		boardroom = boardroomMapper.getBoardroomName(name);
 		return boardroom;
 	}
-
 }
