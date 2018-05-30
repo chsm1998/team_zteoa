@@ -13,30 +13,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="reason" column="reason" />
 	</resultMap>
 
-	<!-- 1、添加办公用品申请 -->
-	<insert id="add" parameterType="Receive">
-		INSERT INTO zteoa_receive
-		(id,eid,pid,num,category,reason,create_time,modify_time)
-		VALUES
-		(#{id},#{eid},#{pid},#{num},#{category},#{reason},#{createTime},#{modifyTime})
+	<!-- 添加办公用品申请 -->
+	<insert id="addReceive" parameterType="Receive">
+		INSERT INTO zteoa_receive (id,eid,pid,num,category,reason,create_time,modify_time)
+				VALUES (#{id},#{eid},#{pid},#{num},#{category},#{reason},#{create_time},#{modify_time})
 	</insert>
-
-	<!-- 2、通过id删除办公用品申请 -->
+	
+	<!-- 通过id删除办公用品申请 -->
 	<delete id="delectReceiveById" parameterType="Integer">
-		delect from
-		zteoa_receive where id=#{id}
+		delect from zteoa_receive where id=#{id}
 	</delete>
-
-	<update id="modify" parameterType="Receive">
+	
+	<!-- 修改办公用品申请 -->
+	<update id="modifyReceive" parameterType="Receive">
 		update zteoa_receive
-		<trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
-			<if test="id != null">id=#{id},</if>
-			<if test="eid != null">eid=#{eid},</if>
-			<if test="pid != null">pid=#{pid},</if>
-			<if test="num != null">num=#{num},</if>
-			<if test="category != null">category=#{category},</if>
-			<if test="reason != null">reason=#{reason},</if>
-			<if test="modify_time != null">modify_time=#{modifyTime},</if>
-		</trim>
+			<trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+				<if test="id != null">id=#{id},</if>
+				<if test="eid != null">eid=#{eid},</if>
+				<if test="pid != null">pid=#{pid},</if>
+				<if test="num != null">num=#{num},</if>
+				<if test="category != null">category=#{category},</if>
+				<if test="reason != null">reason=#{reason},</if>
+				<if test="modify_time != null">modify_time=#{modify_time},</if>
+			</trim>
 	</update>
+	
+	<!-- 查询办公用品申请列表 -->
+	<select id="getReceiveList" resultMap="ReceiveList">
+		select * from zteoa_receive
+		<if test="category != null">
+			and category = #{category}
+		</if>
+	</select>
+	
+	<!-- 根据id查询办公用品申请 -->
+	<select id="getReceiveById" resultMap="ReceiveById">
+		select * from zteoa_receive
+		<if test="id!=null">and p.id=#{id}</if>	
+	</select>
+	
+	<!-- 统计办公用品申请数量 -->
+	<select id="getReceiveCount" resultType="int">
+		select count(id) from zteoa_product_Receive
+	</select>
+	
 </mapper>
