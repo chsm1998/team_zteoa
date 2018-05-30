@@ -10,7 +10,16 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<setting name="logImpl" value="LOG4J" />
 	</settings>
 	<typeAliases>
-			<!--包别名-->
-			  <package name="com.three.zteoa.bean"/>
-		</typeAliases>
+		<!--包别名 -->
+		<package name="com.three.zteoa.bean" />
+	</typeAliases>
+	<plugins>
+		<!-- 分页插件 -->
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<!-- 对于错误参数的处理 -->
+			<property name="reasonable" value="true" />
+			<!-- offset 参数当成 pageNum 使用 -->
+			<property name="offsetAsPageNum" value="true" />
+		</plugin>
+	</plugins>
 </configuration>

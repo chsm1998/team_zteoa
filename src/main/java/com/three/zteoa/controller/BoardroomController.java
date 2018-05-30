@@ -15,6 +15,7 @@ import com.three.zteoa.bean.Boardroom;
 import com.three.zteoa.service.BoardroomService;
 
 @RestController
+@RequestMapping("/boardroom")
 public class BoardroomController extends BaseController {
 	@Resource
 	private BoardroomService boardroomService;

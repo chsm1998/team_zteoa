@@ -14,6 +14,7 @@ import com.three.zteoa.bean.ProductCategory;
 import com.three.zteoa.service.ProductService;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController {
 	@Resource
 	private ProductService productService;

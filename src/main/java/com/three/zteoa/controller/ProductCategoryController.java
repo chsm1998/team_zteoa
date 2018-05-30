@@ -12,6 +12,7 @@ import com.three.zteoa.bean.ProductCategory;
 import com.three.zteoa.service.ProductCategoryService;
 
 @RestController
+@RequestMapping("/productCategory")
 public class ProductCategoryController {
 	@Resource
 	private ProductCategoryService productCategoryService;
@@ -40,11 +41,11 @@ public class ProductCategoryController {
 		return productCategoryService.DeleteProductCategory(id);
 	}
 
-	@RequestMapping("/queryAll")
-	// 查询商品
-	public List<Product> getProductById(Integer id) throws Exception {
-		return productCategoryService.getProductById(id);
-	}
+//	@RequestMapping("/queryAll")
+//	// 查询商品
+//	public List<Product> getProductById(Integer id) throws Exception {
+//		return productCategoryService.getProductById(id);
+//	}
 
 	@RequestMapping("/count")
 	// 统计商品类别数量

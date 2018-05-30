@@ -16,6 +16,8 @@
 		base-package="com.three.zteoa">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.RestController" />
 	</context:component-scan>
 
 	<bean id="dataSource"
