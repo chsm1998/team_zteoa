@@ -13,7 +13,7 @@ public class Boardroom {
 	private String name; // 会议室名称
 	private String address; // 会议室地址
 	private Boolean use; // 是否使用
-	private Date crateTime; // 创建时间
+	private Date createTime; // 创建时间
 	private Date modifyTime; // 修改时间
 
 	public Integer getId() {
@@ -48,12 +48,12 @@ public class Boardroom {
 		this.address = address;
 	}
 
-	public Date getCrateTime() {
-		return crateTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setCrateTime(Date crateTime) {
-		this.crateTime = crateTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public Date getModifyTime() {

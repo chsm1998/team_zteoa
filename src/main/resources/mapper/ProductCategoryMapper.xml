@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.three.zteoa.Mapper.ProductCategoryMapper">	
+<mapper namespace="com.three.zteoa.mapper.ProductCategoryMapper">	
 	<!--查看商品类别表  -->
 	<select id="getProductCategory" resultType="ProductCategory">
 		select * from zteoa_product_category where 1=1
