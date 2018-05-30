@@ -8,16 +8,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 //商品表
 public class Product {
 	private Integer id;
-	private Integer category_id; //商品类别Id
-	private String name; //商品名称
-	private BigDecimal price; //商品价格
-	private Integer num; //商品库存
-	//对日期格式的设置
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date create_time; // 创建时间
-	//对日期格式的设置
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date modify_time; // 修改时间
+	private Integer categoryId; // 商品类别Id
+	private String name; // 商品名称
+	private BigDecimal price; // 商品价格
+	private Integer num; // 商品库存
+	// 对日期格式的设置
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date createTime; // 创建时间
+	// 对日期格式的设置
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date modifyTime; // 修改时间
 
 	public Integer getId() {
 		return id;
@@ -25,14 +25,6 @@ public class Product {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getCategory_id() {
-		return category_id;
-	}
-
-	public void setCategory_id(Integer category_id) {
-		this.category_id = category_id;
 	}
 
 	public String getName() {
@@ -59,20 +51,28 @@ public class Product {
 		this.num = num;
 	}
 
-	public Date getCreate_time() {
-		return create_time;
+	public Integer getCategoryId() {
+		return categoryId;
 	}
 
-	public void setCreate_time(Date create_time) {
-		this.create_time = create_time;
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 
-	public Date getModify_time() {
-		return modify_time;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setModify_time(Date modify_time) {
-		this.modify_time = modify_time;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 
 }

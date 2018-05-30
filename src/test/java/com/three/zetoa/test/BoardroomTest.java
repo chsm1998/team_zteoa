@@ -23,8 +23,8 @@ public class BoardroomTest extends BaseTest{
 		boolean flag = false;
 		boardroom.setName("霸者重装");
 		boardroom.setAddress("Hui_10");
-		boardroom.setIs_user(0);
-		boardroom.setCrate_time(new Date());
+		boardroom.setUse(true);
+		boardroom.setCrateTime(new Date());
 		
 		flag = boardroomService.addBoardroom(boardroom);
 		System.out.println(flag);

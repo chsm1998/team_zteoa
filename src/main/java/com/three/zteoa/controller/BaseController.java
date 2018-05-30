@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 public class BaseController {
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
-		dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"),true));
+		dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 }

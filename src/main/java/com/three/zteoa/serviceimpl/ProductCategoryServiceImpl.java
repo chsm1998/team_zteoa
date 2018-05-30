@@ -1,4 +1,4 @@
-package com.three.zteoa.service;
+package com.three.zteoa.serviceimpl;
 
 import java.util.List;
 
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
 import com.three.zteoa.mapper.ProductCategoryMapper;
-
+import com.three.zteoa.service.ProductCategoryService;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 	@Resource
 	private ProductCategoryMapper productCategoryMapper;
 
-	//查看商品类别表
+	// 查看商品类别表
 	public List<ProductCategory> getProductCategory(ProductCategory pc) throws Exception {
 		List<ProductCategory> p_categorylist = null;
 		try {
@@ -27,9 +27,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return p_categorylist;
 	}
 
-	//添加商品类别
+	// 添加商品类别
 	public boolean AddProductCategory(ProductCategory pc) throws Exception {
-		boolean flag=false;
+		boolean flag = false;
 		try {
 			flag = productCategoryMapper.addProductCategory(pc);
 		} catch (Exception e) {
@@ -38,9 +38,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return flag;
 	}
 
-	//修改商品类别
+	// 修改商品类别
 	public boolean ModifyProductCategory(ProductCategory pc, Integer id) throws Exception {
-		boolean flag=false;
+		boolean flag = false;
 		try {
 			List<Product> productlist = productCategoryMapper.getProductById(id);
 			if (productlist.size() > 0) {
@@ -54,9 +54,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return flag;
 	}
 
-	//删除商品类别
+	// 删除商品类别
 	public boolean DeleteProductCategory(Integer id) throws Exception {
-		boolean flag=false;
+		boolean flag = false;
 		try {
 			List<Product> productlist = productCategoryMapper.getProductById(id);
 			if (productlist.size() > 0) {
@@ -70,7 +70,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return flag;
 	}
 
-	//查询商品
+	// 查询商品
 	public List<Product> getProductById(Integer id) throws Exception {
 		List<Product> productlist = null;
 		try {
@@ -81,8 +81,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return productlist;
 	}
 
-	//统计商品类别数量
-	public int getcount(Integer id)throws Exception {
+	// 统计商品类别数量
+	public int getcount(Integer id) throws Exception {
 		int result = 0;
 		try {
 			result = productCategoryMapper.getCount(id);

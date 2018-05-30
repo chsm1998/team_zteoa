@@ -2,42 +2,47 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.three.zteoa.Mapper.ProductMapper">
-	
-	<!--查看所有商品  -->
+
+	<!--查看所有商品 -->
 	<select id="getProductList" resultType="Product">
-		select p.* from zteoa_product p
+		select p.* from
+		zteoa_product p
 	</select>
-	
+
 	<!-- 添加商品 -->
 	<insert id="addProduct" parameterType="Product">
-		insert into zteoa_product(id,category_id,name,price,num,create_time)
-		values(#{id},#{category_id},#{name},#{price},#{num},#{create_time})
+		insert into
+		zteoa_product(id,category_id,name,price,num,create_time)
+		values(#{id},#{category_id},#{name},#{price},#{num},#{createTime})
 	</insert>
-	
-	<!--修改商品-->
+
+	<!--修改商品 -->
 	<update id="modifyProduct" parameterType="Product">
 		UPDATE zteoa_product
 		<trim prefix="set" suffix="where id=#{id}" suffixOverrides=",">
 			<if test="name!=null and name!=''">name=#{name},</if>
 			<if test="price!=null">price=#{price},</if>
 			<if test="num!=null">num=#{num},</if>
-			<if test="modify_time!=null and  modify_time!=''">modify_time=#{modify_time},</if>
+			<if test="modify_time!=null and  modify_time!=''">modify_time=#{modifyTime},</if>
 		</trim>
 	</update>
-	
+
 	<!--删除商品 -->
 	<delete id="deleteProduct" parameterType="int">
-		delete from zteoa_product where id=#{id}
+		delete from
+		zteoa_product where id=#{id}
 	</delete>
-	
-	<!--统计商品数量  -->
+
+	<!--统计商品数量 -->
 	<select id="getCount" resultType="int">
-		select num from zteoa_product where name=#{name}
+		select num from zteoa_product
+		where name=#{name}
 	</select>
-	
+
 	<!-- 查询商品类别id -->
 	<select id="selectpcById" resultType="ProductCategory">
-	 select p.*,c.category from zteoa_product p,zteoa_product_category c where c.id=p.category_id
-	and c.id=#{id}
+		select p.*,c.category from zteoa_product p,zteoa_product_category c where
+		c.id=p.category_id
+		and c.id=#{id}
 	</select>
 </mapper>
