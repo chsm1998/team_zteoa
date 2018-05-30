@@ -2,8 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.three.zteoa.mapper.BoardroomMapper">
+<mapper namespace="com.three.zteoa.mapper.BoardroomMapper">
 	<!-- 会议室的总数量 -->
 	<select id="getBorardroomCount" resultType="int">
 		select count(1) as count from zteoa_boardroom
@@ -19,14 +18,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 会议室的列表 -->
 	<select id="getBorardroomList" resultType="Boardroom">
 		select * from zteoa_boardroom
-		<trim prefix="where" prefixOverrides="and | or">
-			<if test="name != '' and name != null">
+		<trim prefix="where 1 = 1" prefixOverrides="and | or">
+			<if test="name!= '' and name!= null">
 				and name LIKE CONCAT ('%',#{name},'%')
 			</if>
-			<if test="address !='' and address != null">
+			<if test="address!='' and address!= null">
 				and address = #{address}
 			</if>
-			order by create_time DESC limit #{currentPageNo},#{pageSize}
+			order by createTime DESC limit #{currentPageNo},#{pageSize}
 		</trim>
 	</select>
 	<!-- 会议室的增加 -->
@@ -47,13 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			suffixOverrides=",">
 			<if test="name!=null">name = #{name},</if>
 			<if test="address!=null">address = #{address},</if>
-			<if test="is_use!=null">is_use = #{use},</if>
-			<if test="modify_time!=null">modify_time = #{modifyTime},</if>
+			<if test="is_use!=null">is_use= #{use},</if>
+			<if test="modify_time!=null">modify_time = #{modifyTime}</if>
 		</trim>
 	</update>
 	<!-- 根据id查询会议室 -->
-	<select id="getBoardroomById" parameterType="int"
-		resultType="Boardroom">
+	<select id="getBoardroomById" parameterType="int"	resultType="Boardroom">
 		select * from zteoa_boardroom
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="id != null">
@@ -62,12 +60,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 	</select>
 	<!-- 会议室名称验证 -->
-	<select id="getBoardroomName" resultType="Boardroom">
-		select * from zteoa_boardroom
-		<trim prefix="where" prefixOverrides="and | or">
+	<select id="getBoardroomName" resultType="Boardroom" parameterType="String">
+		select * from zteoa_boardroom where 1 = 1
 			<if test="name !='' and name = !=null">
 				name = #{name}
 			</if>
-		</trim>
 	</select>
 </mapper>

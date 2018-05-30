@@ -67,4 +67,5 @@ public class BoardroomController extends BaseController {
 	public Object userCodeIsExist(@RequestParam String name) throws Exception {
 		return boardroomService.getBoardroomName(name);
 	}
+	
 }

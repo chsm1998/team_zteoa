@@ -14,6 +14,24 @@ public class BoardroomFacilities {
 	private Integer bid;// 所属会议室
 	private Date createTime; // 创建时间
 	private Date modifyTime; // 修改时间
+	private String zBroomName; //会议室名称
+	private String zProductName;//商品名称
+	
+	public String getzBroomName() {
+		return zBroomName;
+	}
+
+	public String getzProductName() {
+		return zProductName;
+	}
+
+	public void setzBroomName(String zBroomName) {
+		this.zBroomName = zBroomName;
+	}
+
+	public void setzProductName(String zProductName) {
+		this.zProductName = zProductName;
+	}
 
 	public int getId() {
 		return id;

@@ -15,7 +15,7 @@ public class Boardroom {
 	private Boolean use; // 是否使用
 	private Date createTime; // 创建时间
 	private Date modifyTime; // 修改时间
-
+	
 	public Integer getId() {
 		return id;
 	}

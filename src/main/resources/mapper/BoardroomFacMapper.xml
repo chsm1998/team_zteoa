@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.three.zteoa.mapper.BoardroomFacMapper">
+	<!-- 会议设施的总数量 -->
+	<select id="getBorardroomFacCount" resultType="int">
+		select count(1) as count from zteoa_boardroom_facilities
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="pid != null">
+				and pid = #{pid}
+			</if>
+			<if test="bid != null">
+				and bid = #{bid}
+			</if>
+		</trim>
+	</select>
+	<!-- 会议设施的列表 -->
+	<select id="getBorardroomFacList" resultType="BoardroomFacilities">
+		SELECT z.*,b.name AS zBroomName,p.name AS zProductName 
+		FROM zteoa_boardroom_facilities z,zteoa_boardroom b,zteoa_product p 
+		WHERE z.bid = b.id AND z.pid = p.id
+		<if test="pid!= null">
+			and z.pid = #{pid}
+		</if>
+		<if test="bid != null">
+			and z.bid = #{bid}
+		</if>
+		order by create_time DESC limit #{currentPageNo},#{pageSize}
+		
+	</select>
+	<!-- 会议设施的增加 -->
+	<insert id="addBoardroomFac" parameterType="BoardroomFacilities">
+		insert into
+		zteoa_boardroom_facilities(pid,num,bid,create_time)
+		values(#{pid},#{num},#{bid},#{createTime})
+	</insert>
+	<!-- 会议设施的删除 -->
+	<delete id="deleteBoardroomFac" parameterType="int">
+		delete from
+		zteoa_boardroom_facilities where id=#{id}
+	</delete>
+	<!-- 会议设施的修改 -->
+	<update id="updateBoardroomFac" parameterType="BoardroomFacilities">
+		update zteoa_boardroom_facilities
+		<trim suffix="where id = #{id}" prefix="set" prefixOverrides=""
+			suffixOverrides=",">
+			<if test="pid!=null">pid = #{pid},</if>
+			<if test="num!=null">num = #{num},</if>
+			<if test="bid!=null">bid = #{bid},</if>
+			<if test="modify_time!=null">modify_time = #{modifyTime},</if>
+		</trim>
+	</update>
+	<!-- 根据id查询会议设施 -->
+	<select id="getBoardroomFacById" parameterType="int"	resultType="BoardroomFacilities">
+		SELECT z.*,b.name AS zBroomName,p.name AS zProductName 
+		FROM zteoa_boardroom_facilities z,zteoa_boardroom b,zteoa_product p 
+		WHERE z.bid = b.id AND z.pid = p.id
+		<if test="id != null">
+			z.id = #{id}
+		</if>
+	</select>
+</mapper>
