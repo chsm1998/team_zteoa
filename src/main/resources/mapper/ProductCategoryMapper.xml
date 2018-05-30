@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getProductCategory" resultType="ProductCategory">
 		select * from zteoa_product_category where 1=1
 		<if test="category!=null and category!=''">and category=#{category}</if>
+		Order by create_Time DESC limit #{currentPageNo},#{pageSize}
 	</select>
 
 	<!--添加商品类别 -->
@@ -21,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update zteoa_product_category
 		<trim prefix="set" suffix="where id=#{id}" suffixOverrides=",">
 			<if test="category!=null and category!=''">category=#{category},</if>
-			<if test="create_time!=null and create_time!=''">create_time=#{createTime},</if>
+			<if test="modify_time!=null and modify_time!=''">modify_time=#{modifyTime},</if>
 		</trim>
 	</update>
 
@@ -40,7 +41,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 统计商品类别数量 -->
 	<select id="getCount" resultType="int">
-		select count(id) from
-		zteoa_product_category
+		select count(1) from
+		zteoa_product_category where 1=1
+		<if test="category!=null and category!=''">and category=#{category}</if>
 	</select>
 </mapper>

@@ -5,15 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!--查看所有商品 -->
 	<select id="getProductList" resultType="Product">
-		select p.* from
-		zteoa_product p
+		select p.* from zteoa_product p
+		<if test="name!=null and name !=''">name=#{name}</if>
+		Order by create_time DESC limit #{currentPageNo},#{pageSize}
 	</select>
 
 	<!-- 添加商品 -->
 	<insert id="addProduct" parameterType="Product">
 		insert into
 		zteoa_product(id,category_id,name,price,num,create_time)
-		values(#{id},#{category_id},#{name},#{price},#{num},#{createTime})
+		values(#{id},#{categoryId},#{name},#{price},#{num},#{createTime})
 	</insert>
 
 	<!--修改商品 -->
@@ -38,7 +39,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select num from zteoa_product
 		where name=#{name}
 	</select>
-
+	
+	<!-- 统计商品 -->
+	<select id="Count" resultType="int">
+		select count(1) from zteoa_product where 1=1
+		<if test="name!=null and name!=''"> and name=#{name}</if>
+	</select>
+	
 	<!-- 查询商品类别id -->
 	<select id="selectpcById" resultType="ProductCategory">
 		select p.*,c.category from zteoa_product p,zteoa_product_category c where

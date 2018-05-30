@@ -17,10 +17,11 @@ public class ProductServiceImpl implements ProductService {
 	private ProductMapper productMapper;
 
 	// 查看所有商品
-	public List<Product> getProductList(Product product) throws Exception {
+	public List<Product> getProductList(String name,int currentPageNo,int pageSize) throws Exception {
 		List<Product> productlist = null;
 		try {
-			productlist = productMapper.getProductList(product);
+			currentPageNo=(currentPageNo -1) * pageSize;
+			productlist = productMapper.getProductList(name, currentPageNo, pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,9 +70,10 @@ public class ProductServiceImpl implements ProductService {
 	// 统计商品数量
 	public int getCount(Integer num, String name) throws Exception {
 		int result = 0;
+		Product product=new Product();
 		try {
-			if (num > 200) {
-				result = productMapper.getCount(num, name);
+			if (product.getNum()> 200) {
+				result = productMapper.getCount(product.getNum(), name);
 			} else {
 				System.out.println(name + "库存数量不足请及时补充！");
 			}
@@ -90,6 +92,17 @@ public class ProductServiceImpl implements ProductService {
 			e.printStackTrace();
 		}
 		return pclist;
+	}
+
+	// 统计商品
+	public int count(String name) throws Exception {
+		int result = 0;
+		try {
+				result = productMapper.count(name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

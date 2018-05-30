@@ -17,10 +17,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	private ProductCategoryMapper productCategoryMapper;
 
 	// 查看商品类别表
-	public List<ProductCategory> getProductCategory(ProductCategory pc) throws Exception {
+	public List<ProductCategory> getProductCategory(String category,int currentPageNo,int pageSize) throws Exception {
 		List<ProductCategory> p_categorylist = null;
 		try {
-			p_categorylist = productCategoryMapper.getProductCategory(pc);
+			currentPageNo=(currentPageNo -1) * pageSize;
+			p_categorylist = productCategoryMapper.getProductCategory(category, currentPageNo, pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -82,10 +83,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	}
 
 	// 统计商品类别数量
-	public int getcount(Integer id) throws Exception {
+	public int getcount(String category) throws Exception {
 		int result = 0;
 		try {
-			result = productCategoryMapper.getCount(id);
+			result = productCategoryMapper.getCount(category);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

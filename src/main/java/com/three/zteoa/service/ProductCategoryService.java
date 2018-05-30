@@ -2,13 +2,14 @@ package com.three.zteoa.service;
 
 import java.util.List;
 
+
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
 
 public interface ProductCategoryService {
 
 	// 查看商品类别表
-	public List<ProductCategory> getProductCategory(ProductCategory pc) throws Exception;
+	public List<ProductCategory> getProductCategory(String category,int currentPageNo,int pageSize) throws Exception;
 
 	// 添加商品类别
 	public boolean AddProductCategory(ProductCategory pc) throws Exception;
@@ -23,6 +24,6 @@ public interface ProductCategoryService {
 	public List<Product> getProductById(Integer id) throws Exception;
 
 	// 统计商品类别数量
-	public int getcount(Integer id) throws Exception;
+	public int getcount(String category) throws Exception;
 
 }

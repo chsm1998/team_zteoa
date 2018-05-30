@@ -10,7 +10,7 @@ import com.three.zteoa.bean.ProductCategory;
 public interface ProductCategoryMapper {
 
 	// 查看商品类别表
-	public List<ProductCategory> getProductCategory(ProductCategory pc);
+	public List<ProductCategory> getProductCategory(@Param("category") String category,@Param ("currentPageNo")int currentPageNo,@Param ("pageSize")int pageSize);
 
 	// 添加商品类别
 	public boolean addProductCategory(ProductCategory pc);
@@ -25,5 +25,5 @@ public interface ProductCategoryMapper {
 	public List<Product> getProductById(@Param("id") Integer id);
 
 	// 统计商品类别数量
-	public int getCount(@Param("id") Integer id);
+	public int getCount(@Param("category") String category);
 }
