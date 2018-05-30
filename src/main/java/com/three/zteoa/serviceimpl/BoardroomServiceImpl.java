@@ -1,4 +1,4 @@
-package com.three.zteoa.service;
+package com.three.zteoa.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.three.zteoa.bean.Boardroom;
 import com.three.zteoa.mapper.BoardroomMapper;
+import com.three.zteoa.service.BoardroomService;
+
 @Service
-public class BoardroomServiceImpl implements BoardroomService{
+public class BoardroomServiceImpl implements BoardroomService {
 	@Resource
 	private BoardroomMapper boardroomMapper;
+
 	@Override
 	public boolean addBoardroom(Boardroom boardroom) throws Exception {
 		// TODO Auto-generated method stub

@@ -2,41 +2,46 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.three.zteoa.Mapper.ProductCategoryMapper">
-	
-	<!--查看商品类别表  -->
+
+	<!--查看商品类别表 -->
 	<select id="getProductCategory" resultType="ProductCategory">
 		select * from zteoa_product_category where 1=1
 		<if test="category!=null and category!=''">and category=#{category}</if>
 	</select>
-	
-	<!--添加商品类别-->
+
+	<!--添加商品类别 -->
 	<insert id="addProductCategory" parameterType="ProductCategory">
-		insert into zteoa_product_category(category,create_time)
-		values(#{category},#{create_time})
+		insert into
+		zteoa_product_category(category,create_time)
+		values(#{category},#{createTime})
 	</insert>
-	
+
 	<!-- 修改商品类别 -->
-	<update id="modifyProductCategory" parameterType="ProductCategory">
+	<update id="modifyProductCategory"
+		parameterType="ProductCategory">
 		update zteoa_product_category
-			<trim prefix="set" suffix="where id=#{id}" suffixOverrides=",">
-				<if test="category!=null and category!=''">category=#{category},</if>
-				<if test="create_time!=null and create_time!=''">create_time=#{create_time},</if>
-			</trim>
+		<trim prefix="set" suffix="where id=#{id}" suffixOverrides=",">
+			<if test="category!=null and category!=''">category=#{category},</if>
+			<if test="create_time!=null and create_time!=''">create_time=#{createTime},</if>
+		</trim>
 	</update>
-	
-	<!--删除商品类别  -->
+
+	<!--删除商品类别 -->
 	<delete id="deleteProductCategory" parameterType="int">
-		delete  from  zteoa_product_category where id=#{id}
+		delete from
+		zteoa_product_category where id=#{id}
 	</delete>
-	
-	<!--查询商品  -->
+
+	<!--查询商品 -->
 	<select id="getProductById" resultType="Product">
-		select p.name,pc.* from zteoa_product_category pc,zteoa_product p where pc.id=p.category_id
+		select p.name,pc.* from zteoa_product_category pc,zteoa_product p
+		where pc.id=p.category_id
 		<if test="id!=null">and p.id=#{id}</if>
 	</select>
-	
+
 	<!-- 统计商品类别数量 -->
 	<select id="getCount" resultType="int">
-		select count(id) from zteoa_product_category
+		select count(id) from
+		zteoa_product_category
 	</select>
 </mapper>
