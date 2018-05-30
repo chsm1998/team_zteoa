@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
-	namespace="com.team_zteoa.dao.zteoa_boardroom.BoardroomMapper">
+	namespace="com.three.zteoa.mapper.BoardroomMapper">
 	<!-- 会议室的总数量 -->
 	<select id="getBorardroomCount" resultType="int">
 		select count(1) as count from zteoa_boardroom
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addBoardroom" parameterType="Boardroom">
 		insert into
 		zteoa_boardroom(name,address,is_use,create_time)
-		values(#{name},#{address},#{is_use},#{createTime})
+		values(#{name},#{address},#{use},#{createTime})
 	</insert>
 	<!-- 会议室的删除 -->
 	<delete id="deleteBoardroom" parameterType="int">
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			suffixOverrides=",">
 			<if test="name!=null">name = #{name},</if>
 			<if test="address!=null">address = #{address},</if>
-			<if test="is_use!=null">is_use = #{is_use},</if>
+			<if test="is_use!=null">is_use = #{use},</if>
 			<if test="modify_time!=null">modify_time = #{modifyTime},</if>
 		</trim>
 	</update>

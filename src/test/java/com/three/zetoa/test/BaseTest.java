@@ -16,5 +16,5 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 @Transactional
 public class BaseTest {
-
+	
 }
