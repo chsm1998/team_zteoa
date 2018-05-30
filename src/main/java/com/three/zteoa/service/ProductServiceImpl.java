@@ -15,7 +15,7 @@ public class ProductServiceImpl implements ProductService {
 	@Resource
 	private ProductMapper productMapper;
 
-	// �鿴������Ʒ
+	//查看所有商品
 	public List<Product> getProductList(Product product) throws Exception {
 		List<Product> productlist = null;
 		try {
@@ -26,53 +26,53 @@ public class ProductServiceImpl implements ProductService {
 		return productlist;
 	}
 
-	// �����Ʒ
-	public int addProduct(Product product, Integer id) throws Exception {
-		int result = 0;
+	//添加商品
+	public boolean addProduct(Product product, Integer id) throws Exception {
+		boolean flag=false;
 		List<ProductCategory> pclist = null;
 		try {
 			pclist = productMapper.selectpcById(id);
 			if (pclist.size() > 0) {
-				result = productMapper.addProduct(product);
+				flag = productMapper.addProduct(product);
 			} else {
-				System.out.println("û����Ʒ���Id�޷����");
+				System.out.println("商品类别id不存在无法添加");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return flag;
 	}
 
-	// �޸���Ʒ
-	public int modifyProduct(Product product) throws Exception {
-		int result = 0;
+	//修改商品 
+	public boolean modifyProduct(Product product) throws Exception {
+		boolean flag=false;
 		try {
-			result = productMapper.modifyProduct(product);
+			flag = productMapper.modifyProduct(product);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return flag;
 	}
 
-	// ɾ����Ʒ
-	public int deleteProduct(Integer id) throws Exception {
-		int result = 0;
+	//删除商品 
+	public boolean deleteProduct(Integer id) throws Exception {
+		boolean flag=false;
 		try {
-			result = productMapper.deleteProduct(id);
+			flag = productMapper.deleteProduct(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return flag;
 	}
 
-	// ͳ����Ʒ����
+	//统计商品数量 
 	public int getCount(Integer num, String name) throws Exception {
 		int result = 0;
 		try {
 			if (num > 200) {
 				result = productMapper.getCount(num, name);
 			} else {
-				System.out.println(name + "��Ʒ��治��");
+				System.out.println(name + "库存数量不足请及时补充！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
-	// ��ѯ��Ʒ���id
+	// 查询商品类别id
 	public List<ProductCategory> selectpcById(Integer id) {
 		List<ProductCategory> pclist = null;
 		try {

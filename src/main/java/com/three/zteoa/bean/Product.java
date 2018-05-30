@@ -5,19 +5,19 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-//ÉÌÆ·±í
+//å•†å“è¡¨
 public class Product {
 	private Integer id;
-	private Integer category_id; // ÉÌÆ·Àà±ğId
-	private String name; // ÉÌÆ·Ãû³Æ
-	private BigDecimal price; // ÉÌÆ·¼Û¸ñ
-	private Integer num; // ÉÌÆ·¿â´æ
-	//¶ÔÈÕÆÚ¸ñÊ½µÄÉèÖÃ
+	private Integer category_id; //å•†å“ç±»åˆ«Id
+	private String name; //å•†å“åç§°
+	private BigDecimal price; //å•†å“ä»·æ ¼
+	private Integer num; //å•†å“åº“å­˜
+	//å¯¹æ—¥æœŸæ ¼å¼çš„è®¾ç½®
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date create_time; // ´´½¨Ê±¼ä
-	//¶ÔÈÕÆÚ¸ñÊ½µÄÉèÖÃ
+	private Date create_time; // åˆ›å»ºæ—¶é—´
+	//å¯¹æ—¥æœŸæ ¼å¼çš„è®¾ç½®
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date modify_time; // ĞŞ¸ÄÊ±¼ä
+	private Date modify_time; // ä¿®æ”¹æ—¶é—´
 
 	public Integer getId() {
 		return id;

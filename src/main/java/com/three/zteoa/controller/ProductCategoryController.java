@@ -9,47 +9,53 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
-import com.three.zteoa.mapper.ProductCategoryMapper;
+import com.three.zteoa.service.ProductCategoryService;
+
 
 @RestController
 public class ProductCategoryController {
 	@Resource
-	private ProductCategoryMapper productCategoryMapper;
+	private ProductCategoryService productCategoryService;
 
-	// ��ѯ��Ʒ���
+	
 	@RequestMapping("/queryAll")
-	public List<ProductCategory> getpCategory(ProductCategory pc) {
-		System.out.println("test");
-		return productCategoryMapper.getProductCategory(pc);
+	//查看商品类别表
+	public List<ProductCategory> getpCategory(ProductCategory pc) throws Exception {
+		return productCategoryService.getProductCategory(pc);
 	}
 
-	// �����Ʒ���
+
 	@RequestMapping("/add")
-	public int Add(ProductCategory pc) {
-		return productCategoryMapper.addProductCategory(pc);
+	//添加商品类别
+	public boolean Add(ProductCategory pc) throws Exception {
+		return productCategoryService.AddProductCategory(pc);
 	}
 
-	// �޸���Ʒ���
+
 	@RequestMapping("/modify")
-	public int Modify(ProductCategory pc) {
-		return productCategoryMapper.modifyProductCategory(pc);
+	//修改商品类别
+	public boolean Modify(ProductCategory pc,Integer id) throws Exception {
+		return productCategoryService.ModifyProductCategory(pc, id);
 	}
 
-	// ɾ����Ʒ���
+	
 	@RequestMapping("/delete")
-	public int Delete(Integer id) {
-		return productCategoryMapper.deleteProductCategory(id);
+	//删除商品类别
+	public boolean Delete(Integer id) throws Exception {
+		return productCategoryService.DeleteProductCategory(id);
 	}
 
-	// ��ѯ��Ʒ
+	
 	@RequestMapping("/queryAll")
-	public List<Product> getProductById(Integer id) {
-		return productCategoryMapper.getProductById(id);
+	//查询商品
+	public List<Product> getProductById(Integer id) throws Exception {
+		return productCategoryService.getProductById(id);
 	}
 
-	// ͳ����Ʒ�������
+	
 	@RequestMapping("/count")
-	public int Count(Integer id) {
-		return productCategoryMapper.getCount(id);
+	//统计商品类别数量
+	public int Count(Integer id) throws Exception {
+		return productCategoryService.getcount(id);
 	}
 }
