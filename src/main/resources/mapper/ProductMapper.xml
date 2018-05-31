@@ -3,18 +3,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.three.zteoa.mapper.ProductMapper">
 
+	<resultMap type="Product" id="myProduct">
+		<result property="category.id" column="pcid" />
+		<result property="category.category" column="category" />
+	</resultMap>
+
 	<!--查看所有商品 -->
-	<select id="getProductList" resultType="Product">
-		select p.* from zteoa_product p
-		<if test="name!=null and name !=''">name=#{name}</if>
-		Order by create_time DESC limit #{currentPageNo},#{pageSize}
+	<select id="getProductList" resultMap="myProduct">
+		select p.*,pc.id pcid,pc.category from zteoa_product p,zteoa_product_category pc
+		<where>
+			pc.id = p.category_id
+			<if test="name != null and name !=''">
+				and	name LIKE #{name}
+			</if>
+			<if test="categoryId != null">
+				and category_id = #{categoryId}
+			</if>
+		</where>
+		Order by p.create_time DESC limit #{currPage},#{pageSize}
 	</select>
 
 	<!-- 添加商品 -->
 	<insert id="addProduct" parameterType="Product">
 		insert into
-		zteoa_product(id,category_id,name,price,num,create_time)
-		values(#{id},#{categoryId},#{name},#{price},#{num},#{createTime})
+		zteoa_product(category_id,name,price,num,create_time)
+		values(#{categoryId},#{name},#{price},#{num},#{createTime})
 	</insert>
 
 	<!--修改商品 -->
@@ -24,7 +37,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="name!=null and name!=''">name=#{name},</if>
 			<if test="price!=null">price=#{price},</if>
 			<if test="num!=null">num=#{num},</if>
-			<if test="modify_time!=null and  modify_time!=''">modify_time=#{modifyTime},</if>
+			<if test="categoryId!=null">
+				category_id = #{categoryId},
+			</if>
+			<if test="modifyTime!=null and  modifyTime!=''">modify_time=#{modifyTime},</if>
 		</trim>
 	</update>
 
@@ -37,19 +53,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--统计商品数量 -->
 	<select id="getCount" resultType="int">
 		select num from zteoa_product
-		where name=#{name}
+		where name LIKE #{name}
 	</select>
-	
+
 	<!-- 统计商品 -->
-	<select id="Count" resultType="int">
+	<select id="count" resultType="int">
 		select count(1) from zteoa_product where 1=1
 		<if test="name!=null and name!=''"> and name=#{name}</if>
 	</select>
-	
+
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*) FROM zteoa_product
+		<where>
+			<if test="name != null and name != ''">
+				name LIKE #{name}
+			</if>
+			<if test="categoryId != null">
+				AND category_id LIKE #{categoryId}
+			</if>
+		</where>
+	</select>
+
 	<!-- 查询商品类别id -->
 	<select id="selectpcById" resultType="ProductCategory">
-		select p.*,c.category from zteoa_product p,zteoa_product_category c where
+		select p.*,c.category from
+		zteoa_product p,zteoa_product_category c where
 		c.id=p.category_id
-		and c.id=#{id}
+		and
+		c.id=#{id}
 	</select>
 </mapper>

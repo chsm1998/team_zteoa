@@ -8,12 +8,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class ProductCategory {
 	private Integer id;
 	private String category; // 商品类别名称
-	// 对日期格式的设置
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createTime; // 创建时间
-	// 对日期格式的设置
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date modifyTime; // 修改时间
+	private Integer currPage;
+	private Integer pageSize;
+
+	public Integer getCurrPage() {
+		return currPage;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductCategory [id=" + id + ", category=" + category + ", createTime=" + createTime + ", modifyTime="
+				+ modifyTime + ", currPage=" + currPage + ", pageSize=" + pageSize + "]";
+	}
+
+	public void setCurrPage(Integer currPage) {
+		this.currPage = currPage;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 
 	public Integer getId() {
 		return id;

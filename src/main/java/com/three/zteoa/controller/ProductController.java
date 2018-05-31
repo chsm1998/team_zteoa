@@ -3,80 +3,54 @@ package com.three.zteoa.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.three.zteoa.bean.Emp;
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.ProductService;
 import com.three.zteoa.tools.PageSupport;
+import com.three.zteoa.vo.UpdateVo;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController {
 	@Resource
 	private ProductService productService;
 
-	@RequestMapping("/queryAll")
-	// 查看所有商品
-	public List<Product> queryAll(Model model,
-			 @RequestParam(value="name",required=false) String name,
-			 @RequestParam(value="pageIndex",required=false) String pageIndex) throws Exception {
-		 
-		//设置页面容量
-		 int pageSize=5;
-		 //设置当前页码
-		 int currentPageNo=1;
-	
-		 if(name ==null) {
-			 name="";
-		 }
-		 if(pageIndex !=null) {
-			 try {
-			 currentPageNo =Integer.parseInt(pageIndex);
-			 }catch(NumberFormatException b) {
-				 b.printStackTrace();
-			 }
-		 }
-		 //总数量
-		 int totalCount =productService.count(name);
-		 PageSupport pages =new PageSupport();
-		 pages.setCurrentPageNo(currentPageNo);
-		 pages.setPageSize(pageSize);
-		 pages.setTotalCount(totalCount);
-		 
-		 //得到总页数
-		 int totalPageCount =pages.getTotalPageCount();
-		 //控住首页和尾页
-		 if(currentPageNo<1) {
-			 currentPageNo=1;
-		 }else if(currentPageNo>totalPageCount) {
-			 currentPageNo = totalPageCount;
-		 }
-		 model.addAttribute("name",name);
-		 model.addAttribute("totalPageCount", totalPageCount);
-		 model.addAttribute("totalCount", totalCount);
-		 model.addAttribute("currentPageNo", currentPageNo);
-		return productService.getProductList(name, currentPageNo, pageSize);
+	@RequestMapping("/queryList")
+	// 分页查看商品
+	public List<Product> queryList(@RequestBody(required = false) Product product) throws Exception {
+		if (product == null) {
+			product = new Product();
+		} else {
+			if (product.getName() != null) {
+				product.setName("%" + product.getName() + "%");
+			}
+		}
+		return productService.getProductList(product);
 	}
 
-	@RequestMapping("/Add")
+	@RequestMapping("/add")
 	// 添加商品
-	public boolean Add(Product product, Integer id) throws Exception {
-		return productService.addProduct(product, id);
+	public boolean Add(@RequestBody Product product) throws Exception {
+		return productService.addProduct(product);
 	}
 
-	@RequestMapping("/Modify")
+	@RequestMapping("/update")
 	// 修改商品
-	public boolean Modify(Product product) throws Exception {
+	public boolean Modify(@RequestBody Product product) throws Exception {
 		return productService.modifyProduct(product);
 	}
 
-	@RequestMapping("/Delete")
+	@RequestMapping("/delete")
 	// 删除商品
 	public boolean Delete(Integer id) throws Exception {
 		return productService.deleteProduct(id);
@@ -87,16 +61,42 @@ public class ProductController {
 	public int Count(Integer num, String name) throws Exception {
 		return productService.getCount(num, name);
 	}
-	
+
 	@RequestMapping("/NameCount")
 	// 统计商品
 	public int NameCount(String name) throws Exception {
 		return productService.count(name);
 	}
-	
+
 	@RequestMapping("/pcid")
 	// 查询商品类别id
 	public List<ProductCategory> getpcById(Integer id) throws Exception {
 		return productService.selectpcById(id);
+	}
+
+	/**
+	 * 鉴权
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return SecurityComponent.isAuthorityProduct(emp);
+	}
+
+	/**
+	 * 获取商品总数
+	 * 
+	 * @param product
+	 * @return
+	 */
+	@RequestMapping("/queryTotal")
+	public int getTotal(@RequestBody Product product) {
+		if (product != null && product.getName() != null) {
+			product.setName("%" + product.getName() + "%");
+		}
+		return productService.getTotal(product);
 	}
 }

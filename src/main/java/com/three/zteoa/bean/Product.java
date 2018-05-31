@@ -12,12 +12,27 @@ public class Product {
 	private String name; // 商品名称
 	private BigDecimal price; // 商品价格
 	private Integer num; // 商品库存
-	// 对日期格式的设置
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createTime; // 创建时间
-	// 对日期格式的设置
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date modifyTime; // 修改时间
+	private ProductCategory category;
+	private Integer currPage;
+	private Integer pageSize;
+
+	public Integer getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(Integer currPage) {
+		this.currPage = currPage;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 
 	public Integer getId() {
 		return id;
@@ -73,6 +88,21 @@ public class Product {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	public ProductCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(ProductCategory category) {
+		this.category = category;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", categoryId=" + categoryId + ", name=" + name + ", price=" + price + ", num="
+				+ num + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", category=" + category
+				+ ", currPage=" + currPage + ", pageSize=" + pageSize + "]";
 	}
 
 }

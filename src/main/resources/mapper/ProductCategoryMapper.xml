@@ -8,6 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="category!=null and category!=''">and category=#{category}</if>
 		Order by create_Time DESC limit #{currentPageNo},#{pageSize}
 	</select>
+	
+	<select id="queryAll" resultType="ProductCategory">
+		SELECT * FROM zteoa_product_category;
+	</select>
 
 	<!--添加商品类别 -->
 	<insert id="addProductCategory" parameterType="ProductCategory">

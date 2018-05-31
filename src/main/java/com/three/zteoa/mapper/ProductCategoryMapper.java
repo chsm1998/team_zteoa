@@ -26,4 +26,10 @@ public interface ProductCategoryMapper {
 
 	// 统计商品类别数量
 	public int getCount(@Param("category") String category);
+	
+	/**
+	 * 查询所有商品类别
+	 * @return
+	 */
+	List<ProductCategory> queryAll();
 }

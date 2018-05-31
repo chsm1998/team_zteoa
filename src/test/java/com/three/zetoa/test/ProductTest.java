@@ -19,11 +19,10 @@ public class ProductTest extends BaseTest{
 	
 	@Test
 	public void queryAll() {
-		try {
-			productService.getProductList(null,2,5).forEach(System.out::println);;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		Product product = new Product();
+		product.setCurrPage(1);
+		product.setPageSize(5);
+		productService.getProductList(product).forEach(System.out::println);;
 	}
 	
 	@Test
@@ -36,7 +35,7 @@ public class ProductTest extends BaseTest{
 			product.setNum(10000);
 			product.setPrice(new BigDecimal(13.00));
 			product.setCreateTime(new Date());
-			productService.addProduct(product, 2);
+//			productService.addProduct(product, 2);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

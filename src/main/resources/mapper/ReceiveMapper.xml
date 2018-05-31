@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 根据id查询办公用品申请 -->
-	<select id="getReceiveById" resultMap="ReceiveById">
+	<select id="getReceiveById" resultMap="ReceiveList">
 		select * from zteoa_receive
 		<if test="id!=null">and p.id=#{id}</if>	
 	</select>

@@ -25,5 +25,7 @@ public interface ProductCategoryService {
 
 	// 统计商品类别数量
 	public int getcount(String category) throws Exception;
+	
+	public List<ProductCategory> queryAll();
 
 }

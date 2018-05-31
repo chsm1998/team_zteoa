@@ -17,68 +17,37 @@ public class ProductServiceImpl implements ProductService {
 	private ProductMapper productMapper;
 
 	// 查看所有商品
-	public List<Product> getProductList(String name,int currentPageNo,int pageSize) throws Exception {
+	public List<Product> getProductList(Product product) {
 		List<Product> productlist = null;
-		try {
-			currentPageNo=(currentPageNo -1) * pageSize;
-			productlist = productMapper.getProductList(name, currentPageNo, pageSize);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		product.setCurrPage((product.getCurrPage() - 1) * product.getPageSize());
+		;
+		productlist = productMapper.getProductList(product);
 		return productlist;
 	}
 
 	// 添加商品
-	public boolean addProduct(Product product, Integer id) throws Exception {
-		boolean flag = false;
-		List<ProductCategory> pclist = null;
-		try {
-			pclist = productMapper.selectpcById(id);
-			if (pclist.size() > 0) {
-				flag = productMapper.addProduct(product);
-			} else {
-				System.out.println("商品类别id不存在无法添加");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return flag;
+	public boolean addProduct(Product product) {
+		return productMapper.addProduct(product);
 	}
 
 	// 修改商品
-	public boolean modifyProduct(Product product) throws Exception {
-		boolean flag = false;
-		try {
-			flag = productMapper.modifyProduct(product);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return flag;
+	public boolean modifyProduct(Product product) {
+		return productMapper.modifyProduct(product);
 	}
 
 	// 删除商品
-	public boolean deleteProduct(Integer id) throws Exception {
-		boolean flag = false;
-		try {
-			flag = productMapper.deleteProduct(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return flag;
+	public boolean deleteProduct(Integer id) {
+		return productMapper.deleteProduct(id);
 	}
 
 	// 统计商品数量
-	public int getCount(Integer num, String name) throws Exception {
+	public int getCount(Integer num, String name) {
 		int result = 0;
-		Product product=new Product();
-		try {
-			if (product.getNum()> 200) {
-				result = productMapper.getCount(product.getNum(), name);
-			} else {
-				System.out.println(name + "库存数量不足请及时补充！");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		Product product = new Product();
+		if (product.getNum() > 200) {
+			result = productMapper.getCount(product.getNum(), name);
+		} else {
+			System.out.println(name + "库存数量不足请及时补充！");
 		}
 		return result;
 	}
@@ -86,23 +55,20 @@ public class ProductServiceImpl implements ProductService {
 	// 查询商品类别id
 	public List<ProductCategory> selectpcById(Integer id) {
 		List<ProductCategory> pclist = null;
-		try {
-			pclist = productMapper.selectpcById(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		pclist = productMapper.selectpcById(id);
 		return pclist;
 	}
 
 	// 统计商品
-	public int count(String name) throws Exception {
+	public int count(String name) {
 		int result = 0;
-		try {
-				result = productMapper.count(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		result = productMapper.count(name);
 		return result;
+	}
+
+	@Override
+	public int getTotal(Product product) {
+		return productMapper.getTotal(product);
 	}
 
 }
