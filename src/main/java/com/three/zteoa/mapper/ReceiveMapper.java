@@ -33,5 +33,5 @@ public interface ReceiveMapper {
 	public int getReceiveCount(@Param("id")Integer id,@Param("category")String category) throws Exception;
 
 	// 查询办公用品申请列表
-	public List<Receive> getReceiveList(@Param("eid")Integer eid,@Param("pid")Integer pid,@Param("currentPageNo")int currentPageNo,@Param("pageSize")int pageSize) throws Exception;
+	public List<Receive> getReceiveList(Receive receive) throws Exception;
 }
