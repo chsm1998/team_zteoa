@@ -14,9 +14,19 @@ public class BoardroomApply {
 	private Integer id;// 主键id
 	private Date start;// 开始时间
 	private Date end;// 结束时间
+	private Integer eid;//申请人
 	private Boolean agree;// 是否同意
 	private Date createTime;// 创建时间
 	private Date modifyTime;// 修改时间
+
+	
+	public Integer getEid() {
+		return eid;
+	}
+
+	public void setEid(Integer eid) {
+		this.eid = eid;
+	}
 
 	public Integer getId() {
 		return id;

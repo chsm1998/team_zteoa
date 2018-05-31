@@ -88,13 +88,12 @@ public class ReceiveServiceImpl implements ReceiveService{
 	}
 
 	@Override
-	public List<Receive> getReceiveList(Integer eid, Integer pid, int currentPageNo, int pageSize) throws Exception {
+	public List<Receive> getReceiveList(Receive receive) throws Exception {
 		// TODO Auto-generated method stub
 		List<Receive> receiveList = null;
 		try {
-			receiveList = receiveMapper.getReceiveList(eid, pid, currentPageNo, pageSize);
-			currentPageNo = (currentPageNo - 1) * pageSize;
-		} catch (Exception e) {
+			receiveList = receiveMapper.getReceiveList(receive);
+			} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return receiveList;
