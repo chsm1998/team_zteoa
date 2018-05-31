@@ -15,7 +15,27 @@ public class Boardroom {
 	private Boolean use; // 是否使用
 	private Date createTime; // 创建时间
 	private Date modifyTime; // 修改时间
-	
+
+	private Integer currPage;
+	private Integer pageSize;
+
+	public Integer getCurrPage() {
+		return currPage;
+	}
+
+
+	public void setCurrPage(Integer currPage) {
+		this.currPage = currPage;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -62,6 +82,12 @@ public class Boardroom {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+	
+	@Override
+	public String toString() {
+		return "Boardroom [id=" + id + ", name=" + name + ", address=" + address + ", use=" + use + ", createTime="
+				+ createTime + ", modifyTime=" + modifyTime + ", currPage=" + currPage + ", pageSize=" + pageSize + "]";
 	}
 
 }

@@ -3,8 +3,10 @@ package com.three.zteoa.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.Boardroom;
+import com.three.zteoa.bean.Emp;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.BoardroomService;
+import com.three.zteoa.vo.UpdateVo;
 
 @RestController
 @RequestMapping("/boardroom")
@@ -21,37 +26,27 @@ public class BoardroomController extends BaseController {
 	private BoardroomService boardroomService;
 
 	// 会议室列表
-	@RequestMapping("/boardroomList.html")
-	public List<Boardroom> getBorardroomList(Model model, @RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "address", required = false) String address,
-			@RequestParam(value = "pageIndex", required = false) String pageIndex) throws Exception {
-		int currentPageNo = 0;
-		int pageSize = 5;
-		return boardroomService.getBorardroomList(name, address, currentPageNo, pageSize);
+	@RequestMapping("/queryList")
+	public List<Boardroom> getBorardroomList(@RequestBody Boardroom boardroom) {
+		return boardroomService.getBorardroomList(boardroom);
 	}
 
 	// 增加会议室
-	@RequestMapping(value = "/boardroomaddsave.html", method = RequestMethod.POST)
-	public Object addboardroomSave(Boardroom boardroom) throws Exception {
-		boolean flag = false;
-		flag = boardroomService.addBoardroom(boardroom);
-		return flag;
+	@RequestMapping("/add")
+	public boolean addboardroomSave(@RequestBody Boardroom boardroom) throws Exception {
+		return boardroomService.addBoardroom(boardroom);
 	}
 
 	// 修改会议室
-	@RequestMapping(value = "/boardroomupdatesave.html", method = RequestMethod.POST)
-	public Object updateboardroomSave(Boardroom boardroom) throws Exception {
-		boolean flag = false;
-		flag = boardroomService.updateBoardroom(boardroom);
-		return flag;
+	@RequestMapping("/update")
+	public boolean updateboardroomSave(@RequestBody Boardroom boardroom) throws Exception {
+		return boardroomService.updateBoardroom(boardroom);
 	}
 
 	// 删除会议室
-	@RequestMapping(value = "/boardroomdelete.html", method = RequestMethod.GET)
-	public Object deleteboardroom(@RequestParam Integer id) throws Exception {
-		boolean flag = false;
-		flag = boardroomService.deleteBoardroom(id);
-		return flag;
+	@RequestMapping("/delete")
+	public Object deleteboardroom(Integer id) throws Exception {
+		return boardroomService.deleteBoardroom(id);
 	}
 
 	// 会议室据id查询
@@ -68,4 +63,22 @@ public class BoardroomController extends BaseController {
 		return boardroomService.getBoardroomName(name);
 	}
 	
+	/**
+	 * 鉴权
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return SecurityComponent.isAuthorityProduct(emp);
+	}
+	
+	@RequestMapping("/queryTotal")
+	public int queryTotal(Boardroom boardroom) {
+		return boardroomService.getBorardroomCount(boardroom.getName(), null);
+	}
+	
+
 }

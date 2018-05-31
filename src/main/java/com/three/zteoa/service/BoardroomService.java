@@ -9,11 +9,10 @@ public interface BoardroomService {
 	public boolean addBoardroom(Boardroom boardroom) throws Exception;
 
 	// 会议室的数量
-	public int getBorardroomCount(String name, String address) throws Exception;
+	public int getBorardroomCount(String name, String address);
 
 	// 会议室的列表查询
-	public List<Boardroom> getBorardroomList(String name, String address, int currentPageNo, int pageSize)
-			throws Exception;
+	public List<Boardroom> getBorardroomList(Boardroom boardroom);
 
 	// 会议室的删除
 	public boolean deleteBoardroom(int id) throws Exception;

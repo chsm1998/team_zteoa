@@ -17,11 +17,10 @@ public interface BoardroomMapper {
 	public boolean addBoardroom(Boardroom boardroom) throws Exception;
 
 	// 会议室的数量
-	public int getBorardroomCount(@Param("name") String name, @Param("address") String address) throws Exception;
+	public int getBorardroomCount(@Param("name") String name, @Param("address") String address);
 
 	// 会议室的列表查询
-	public List<Boardroom> getBorardroomList(@Param("name") String name, @Param("address") String address,
-			@Param("currentPageNo") int currentPageNo, @Param("pageSize") int pageSize) throws Exception;
+	public List<Boardroom> getBorardroomList(Boardroom boardroom);
 
 	// 会议室的删除
 	public boolean deleteBoardroom(@Param("id") int id) throws Exception;

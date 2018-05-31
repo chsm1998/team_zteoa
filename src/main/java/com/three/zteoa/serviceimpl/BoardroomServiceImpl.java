@@ -1,6 +1,7 @@
 package com.three.zteoa.serviceimpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,13 +20,16 @@ public class BoardroomServiceImpl implements BoardroomService {
 	@Override
 	public boolean addBoardroom(Boardroom boardroom) throws Exception {
 		// TODO Auto-generated method stub
+		Date date = new Date();
+		boardroom.setCreateTime(date);
+		boardroom.setModifyTime(date);
 		boolean flag = false;
 		flag = boardroomMapper.addBoardroom(boardroom);
 		return flag;
 	}
 
 	@Override
-	public int getBorardroomCount(String name, String address) throws Exception {
+	public int getBorardroomCount(String name, String address){
 		// TODO Auto-generated method stub
 		int result = 0;
 		result = boardroomMapper.getBorardroomCount(name, address);
@@ -33,13 +37,9 @@ public class BoardroomServiceImpl implements BoardroomService {
 	}
 
 	@Override
-	public List<Boardroom> getBorardroomList(String name, String address, int currentPageNo, int pageSize)
-			throws Exception {
-		// TODO Auto-generated method stub
-		List<Boardroom> borardroomList = new ArrayList<Boardroom>();
-		currentPageNo = (currentPageNo - 1) * pageSize;
-		borardroomList = boardroomMapper.getBorardroomList(name, address, currentPageNo, pageSize);
-		return borardroomList;
+	public List<Boardroom> getBorardroomList(Boardroom boardroom) {
+		boardroom.setCurrPage((boardroom.getCurrPage() - 1) * boardroom.getPageSize());
+		return boardroomMapper.getBorardroomList(boardroom);
 	}
 
 	@Override
@@ -53,6 +53,7 @@ public class BoardroomServiceImpl implements BoardroomService {
 	@Override
 	public boolean updateBoardroom(Boardroom boardroom) throws Exception {
 		// TODO Auto-generated method stub
+		boardroom.setModifyTime(new Date());
 		boolean flag = false;
 		flag = boardroomMapper.updateBoardroom(boardroom);
 		return flag;

@@ -29,7 +29,7 @@ public class BoardroomTest extends BaseTest{
 
 	@Test
 	public void boardroomTest2() throws Exception{
-		boardroomService.getBorardroomList(null,null,0,5).forEach(System.out::println);;		
+//		boardroomService.getBorardroomList(null,null,0,5).forEach(System.out::println);;		
 	}
 	
 	@Test
