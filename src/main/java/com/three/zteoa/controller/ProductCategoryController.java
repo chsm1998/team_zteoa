@@ -2,17 +2,22 @@ package com.three.zteoa.controller;
 
 import java.util.List;
 
+import javax.annotation.Generated;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.three.zteoa.bean.Emp;
 import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.ProductCategoryService;
-import com.three.zteoa.tools.PageSupport;
+import com.three.zteoa.vo.UpdateVo;
 
 @RestController
 @RequestMapping("/productCategory")
@@ -22,62 +27,25 @@ public class ProductCategoryController {
 
 	@RequestMapping("/queryList")
 	// 查看商品类别表
-	public List<ProductCategory> getpCategory(Model model,
-			 @RequestParam(value="category",required=false) String category,
-			 @RequestParam(value="pageIndex",required=false) String pageIndex) throws Exception {
-		//设置页面容量
-		 int pageSize=5;
-		 //设置当前页码
-		 int currentPageNo=1;
-		 
-		 if(category ==null) {
-			 category="";
-		 }
-		 if(pageIndex !=null) {
-			 try {
-			 currentPageNo =Integer.parseInt(pageIndex);
-			 }catch(NumberFormatException b) {
-				 b.printStackTrace();
-			 }
-		 }
-		 //总数量
-		 int totalCount =productCategoryService.getcount(category);
-		 PageSupport pages =new PageSupport();
-		 pages.setCurrentPageNo(currentPageNo);
-		 pages.setPageSize(pageSize);
-		 pages.setTotalCount(totalCount);
-		 
-		 //得到总页数
-		 int totalPageCount =pages.getTotalPageCount();
-		 //控住首页和尾页
-		 if(currentPageNo<1) {
-			 currentPageNo=1;
-		 }else if(currentPageNo>totalPageCount) {
-			 currentPageNo = totalPageCount;
-		 }
-		 model.addAttribute("category",category);
-		 model.addAttribute("totalPageCount", totalPageCount);
-		 model.addAttribute("totalCount", totalCount);
-		 model.addAttribute("currentPageNo", currentPageNo);
-		
-		return productCategoryService.getProductCategory(category, currentPageNo, pageSize);
+	public List<ProductCategory> getpCategory(@RequestBody ProductCategory productCategory) throws Exception {
+		return productCategoryService.getProductCategory(productCategory);
 	}
 
 	@RequestMapping("/add")
 	// 添加商品类别
-	public boolean Add(ProductCategory pc) throws Exception {
+	public boolean Add(@RequestBody ProductCategory pc) throws Exception {
 		return productCategoryService.AddProductCategory(pc);
 	}
 
-	@RequestMapping("/modify")
+	@RequestMapping("/update")
 	// 修改商品类别
-	public boolean Modify(ProductCategory pc, Integer id) throws Exception {
-		return productCategoryService.ModifyProductCategory(pc, id);
+	public boolean Modify(@RequestBody ProductCategory pc) throws Exception {
+		return productCategoryService.ModifyProductCategory(pc);
 	}
 
 	@RequestMapping("/delete")
 	// 删除商品类别
-	public boolean Delete(Integer id) throws Exception {
+	public UpdateVo Delete(Integer id) throws Exception {
 		return productCategoryService.DeleteProductCategory(id);
 	}
 
@@ -92,9 +60,26 @@ public class ProductCategoryController {
 	public int Count(String category) throws Exception {
 		return productCategoryService.getcount(category);
 	}
-	
+
 	@RequestMapping("/queryAll")
 	public List<ProductCategory> queryAll() {
 		return productCategoryService.queryAll();
+	}
+	
+	/**
+	 * 鉴权
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return SecurityComponent.isAuthorityProduct(emp);
+	}
+	
+	@RequestMapping("/queryTotal")
+	public int queryTotal(@RequestBody(required = false) ProductCategory productCategory) {
+		return productCategoryService.queryTotal(productCategory);
 	}
 }

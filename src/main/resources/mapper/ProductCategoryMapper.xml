@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--查看商品类别表  -->
 	<select id="getProductCategory" resultType="ProductCategory">
 		select * from zteoa_product_category where 1=1
-		<if test="category!=null and category!=''">and category=#{category}</if>
-		Order by create_Time DESC limit #{currentPageNo},#{pageSize}
+		<if test="category!=null and category!=''">and category LIKE #{category}</if>
+		Order by create_time DESC limit #{currPage},#{pageSize}
 	</select>
 	
 	<select id="queryAll" resultType="ProductCategory">
@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--添加商品类别 -->
 	<insert id="addProductCategory" parameterType="ProductCategory">
 		insert into
-		zteoa_product_category(category,create_time)
-		values(#{category},#{createTime})
+		zteoa_product_category(category,create_time,modify_time)
+		values(#{category},#{createTime},#{modifyTime})
 	</insert>
 
 	<!-- 修改商品类别 -->
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update zteoa_product_category
 		<trim prefix="set" suffix="where id=#{id}" suffixOverrides=",">
 			<if test="category!=null and category!=''">category=#{category},</if>
-			<if test="modify_time!=null and modify_time!=''">modify_time=#{modifyTime},</if>
+			<if test="modifyTime!=null">modify_time=#{modifyTime},</if>
 		</trim>
 	</update>
 
@@ -35,12 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from
 		zteoa_product_category where id=#{id}
 	</delete>
-
-	<!--查询商品 -->
+	
 	<select id="getProductById" resultType="Product">
-		select p.name,pc.* from zteoa_product_category pc,zteoa_product p
-		where pc.id=p.category_id
-		<if test="id!=null">and p.id=#{id}</if>
+		select * from zteoa_product p
+		<where>
+			<if test="id!=null">and category_id=#{id}</if>
+		</where>
 	</select>
 
 	<!-- 统计商品类别数量 -->
@@ -48,5 +48,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(1) from
 		zteoa_product_category where 1=1
 		<if test="category!=null and category!=''">and category=#{category}</if>
+	</select>
+	
+	<select id="queryByName" resultType="int">
+		SELECT COUNT(*) FROM zteoa_product_category
+		WHERE
+		category = #{category}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*) FROM zteoa_product_category
+		<where>
+			<if test="category != null and category != ''">
+				category = #{category}
+			</if>
+		</where>
 	</select>
 </mapper>

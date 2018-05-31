@@ -17,7 +17,7 @@ public class ProductCategoryTest extends BaseTest{
 	@Test
 	public  void queryAll() {
 		try {
-			productCategoryService.getProductCategory("桌面用品",2,5).forEach(System.out::println);
+//			productCategoryService.getProductCategory("桌面用品",2,5).forEach(System.out::println);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -66,5 +66,7 @@ public class ProductCategory {
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
 	}
+	
+	
 
 }

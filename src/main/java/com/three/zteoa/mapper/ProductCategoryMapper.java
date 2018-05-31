@@ -10,16 +10,16 @@ import com.three.zteoa.bean.ProductCategory;
 public interface ProductCategoryMapper {
 
 	// 查看商品类别表
-	public List<ProductCategory> getProductCategory(@Param("category") String category,@Param ("currentPageNo")int currentPageNo,@Param ("pageSize")int pageSize);
+	public List<ProductCategory> getProductCategory(ProductCategory productCategory);
 
 	// 添加商品类别
-	public boolean addProductCategory(ProductCategory pc);
+	public int addProductCategory(ProductCategory pc);
 
 	// 修改商品类别
-	public boolean modifyProductCategory(ProductCategory pc);
+	public int modifyProductCategory(ProductCategory pc);
 
 	// 删除商品类别
-	public boolean deleteProductCategory(@Param("id") Integer id);
+	public int deleteProductCategory(@Param("id") Integer id);
 
 	// 查询商品
 	public List<Product> getProductById(@Param("id") Integer id);
@@ -32,4 +32,18 @@ public interface ProductCategoryMapper {
 	 * @return
 	 */
 	List<ProductCategory> queryAll();
+	
+	/**
+	 * 判断当前类别是否存在
+	 * @param category
+	 * @return
+	 */
+	int queryByName(String category);
+	
+	/**
+	 * 获取总记录数
+	 * @param category
+	 * @return
+	 */
+	int getTotal(ProductCategory productCategory);
 }

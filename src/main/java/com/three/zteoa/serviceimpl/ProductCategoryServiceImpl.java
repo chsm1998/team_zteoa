@@ -1,5 +1,6 @@
 package com.three.zteoa.serviceimpl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
 import com.three.zteoa.mapper.ProductCategoryMapper;
 import com.three.zteoa.service.ProductCategoryService;
+import com.three.zteoa.vo.UpdateVo;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
@@ -18,53 +20,48 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	private ProductCategoryMapper productCategoryMapper;
 
 	// 查看商品类别表
-	public List<ProductCategory> getProductCategory(String category, int currentPageNo, int pageSize) throws Exception {
-		List<ProductCategory> p_categorylist = null;
-		currentPageNo = (currentPageNo - 1) * pageSize;
-		p_categorylist = productCategoryMapper.getProductCategory(category, currentPageNo, pageSize);
-		return p_categorylist;
+	public List<ProductCategory> getProductCategory(ProductCategory productCategory) {
+		productCategory.setCurrPage((productCategory.getCurrPage() - 1) * productCategory.getPageSize());
+		if (productCategory.getCategory() != null) {
+			productCategory.setCategory("%" + productCategory.getCategory() + "%");
+		}
+		return productCategoryMapper.getProductCategory(productCategory);
 	}
 
 	// 添加商品类别
-	public boolean AddProductCategory(ProductCategory pc) throws Exception {
-		boolean flag = false;
-		flag = productCategoryMapper.addProductCategory(pc);
-		return flag;
+	public boolean AddProductCategory(ProductCategory pc) {
+		Date date = new Date();
+		pc.setCreateTime(date);
+		pc.setModifyTime(date);
+		return productCategoryMapper.addProductCategory(pc) == 1;
 	}
 
 	// 修改商品类别
-	public boolean ModifyProductCategory(ProductCategory pc, Integer id) throws Exception {
-		boolean flag = false;
-		List<Product> productlist = productCategoryMapper.getProductById(id);
-		if (productlist.size() > 0) {
-			System.out.println("存在外键关联商品无法修改");
-		} else {
-			flag = productCategoryMapper.modifyProductCategory(pc);
-		}
-		return flag;
+	public boolean ModifyProductCategory(ProductCategory pc) {
+		pc.setModifyTime(new Date());
+		return productCategoryMapper.modifyProductCategory(pc) == 1;
 	}
 
 	// 删除商品类别
-	public boolean DeleteProductCategory(Integer id) throws Exception {
-		boolean flag = false;
-		List<Product> productlist = productCategoryMapper.getProductById(id);
-		if (productlist.size() > 0) {
-			System.out.println("存在外键关联商品无法删除");
-		} else {
-			flag = productCategoryMapper.deleteProductCategory(id);
+	public UpdateVo DeleteProductCategory(Integer id) {
+		if (productCategoryMapper.getProductById(id).size() > 0) {
+			return new UpdateVo("该类别下存在用品，禁止删除！！！", false);
 		}
-		return flag;
+		if (productCategoryMapper.deleteProductCategory(id) == 1) {
+			return new UpdateVo("删除成功", true);
+		}
+		return new UpdateVo("删除失败，服务器异常", false);
 	}
 
 	// 查询商品
-	public List<Product> getProductById(Integer id) throws Exception {
+	public List<Product> getProductById(Integer id) {
 		List<Product> productlist = null;
 		productlist = productCategoryMapper.getProductById(id);
 		return productlist;
 	}
 
 	// 统计商品类别数量
-	public int getcount(String category) throws Exception {
+	public int getcount(String category) {
 		int result = 0;
 		result = productCategoryMapper.getCount(category);
 		return result;
@@ -72,5 +69,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
 	public List<ProductCategory> queryAll() {
 		return productCategoryMapper.queryAll();
+	}
+
+	@Override
+	public int queryTotal(ProductCategory productCategory) {
+		if (productCategory == null) {
+			productCategory = new ProductCategory();
+		}
+		return productCategoryMapper.getTotal(productCategory);
 	}
 }
