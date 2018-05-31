@@ -17,16 +17,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 会议室的列表 -->
 	<select id="getBorardroomList" resultType="Boardroom">
-		select * from zteoa_boardroom
-		<trim prefix="where 1 = 1" prefixOverrides="and | or">
+		select * from zteoa_boardroom where 1 = 1
 			<if test="name!= '' and name!= null">
 				and name LIKE CONCAT ('%',#{name},'%')
 			</if>
 			<if test="address!='' and address!= null">
 				and address = #{address}
 			</if>
-			order by createTime DESC limit #{currentPageNo},#{pageSize}
-		</trim>
+			order by create_time DESC limit #{currentPageNo},#{pageSize}
 	</select>
 	<!-- 会议室的增加 -->
 	<insert id="addBoardroom" parameterType="Boardroom">
