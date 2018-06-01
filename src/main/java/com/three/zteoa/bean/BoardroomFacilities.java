@@ -14,39 +14,42 @@ public class BoardroomFacilities {
 	private Integer bid;// 所属会议室
 	private Date createTime; // 创建时间
 	private Date modifyTime; // 修改时间
-	private String zBroomName; //会议室名称
-	private String zProductName;//商品名称
-	
-	public String getzBroomName() {
-		return zBroomName;
-	}
+	private String zBroomName; // 会议室名称
+	private String zProductName;// 商品名称
 
-	public String getzProductName() {
-		return zProductName;
-	}
+	private Integer currPage;
+	private Integer pageSize;
 
-	public void setzBroomName(String zBroomName) {
-		this.zBroomName = zBroomName;
-	}
-
-	public void setzProductName(String zProductName) {
-		this.zProductName = zProductName;
-	}
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public int getPid() {
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getPid() {
 		return pid;
 	}
 
-	public int getNum() {
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+
+	public Integer getNum() {
 		return num;
 	}
 
-	public int getBid() {
+	public void setNum(Integer num) {
+		this.num = num;
+	}
+
+	public Integer getBid() {
 		return bid;
+	}
+
+	public void setBid(Integer bid) {
+		this.bid = bid;
 	}
 
 	public Date getCreateTime() {
@@ -65,36 +68,43 @@ public class BoardroomFacilities {
 		this.modifyTime = modifyTime;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public String getzBroomName() {
+		return zBroomName;
 	}
 
-	public void setPid(Integer pid) {
-		this.pid = pid;
+	public void setzBroomName(String zBroomName) {
+		this.zBroomName = zBroomName;
 	}
 
-	public void setNum(Integer num) {
-		this.num = num;
+	public String getzProductName() {
+		return zProductName;
 	}
 
-	public void setBid(Integer bid) {
-		this.bid = bid;
+	public void setzProductName(String zProductName) {
+		this.zProductName = zProductName;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public Integer getCurrPage() {
+		return currPage;
 	}
 
-	public void setPid(int pid) {
-		this.pid = pid;
+	public void setCurrPage(Integer currPage) {
+		this.currPage = currPage;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
-	public void setBid(int bid) {
-		this.bid = bid;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	@Override
+	public String toString() {
+		return "BoardroomFacilities [id=" + id + ", pid=" + pid + ", num=" + num + ", bid=" + bid + ", createTime="
+				+ createTime + ", modifyTime=" + modifyTime + ", zBroomName=" + zBroomName + ", zProductName="
+				+ zProductName + ", currPage=" + currPage + ", pageSize=" + pageSize + "]";
 	}
 
 }

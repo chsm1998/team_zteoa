@@ -4,10 +4,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.three.zteoa.mapper.BoardroomApplyMapper">
 	
+	<resultMap type="BoardroomApply" id="MyBoardroomApply">
+		<result column="zbname" property="boardroom.name"/>
+		<result column="ename" property="emp.name"/>
+	</resultMap>
+	
 	<!-- 增加会议室申请 -->
 	<insert id="addBoardroomApply" parameterType="BoardroomApply">
-		insert into zteoa_boardroom_apply(start,end,eid,is_agree,create_time)
-		values(#{start},#{end},#{eid},#{is_agree},#{create_time})
+		insert into zteoa_boardroom_apply(start,end,eid,bid,agree,create_time,modify_time)
+		values(#{start},#{end},#{eid},#{bid},#{agree},#{createTime},#{modifyTime})
 	</insert>
 	
 	<!-- 删除会议室申请 -->
@@ -17,26 +22,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 修改会议室申请 -->
 	<update id="modifyBoardroomApply" parameterType="BoardroomApply">
-		update zteoa_boardroom
+		update zteoa_boardroom_apply
 		<trim suffix="where id = #{id}" prefix="set" prefixOverrides="" suffixOverrides=",">
 			<if test="start!=null">start = #{start},</if>
 			<if test="end!=null">end = #{end},</if>
-			<if test="is_agree!=null">is_agree = #{is_agree},</if>
-			<if test="modify_time!=null">modify_time = #{modify_time},</if>
+			<if test="bid!=null">bid = #{bid},</if>
+			<if test="agree!=null">agree = #{agree},</if>
+			<if test="modifyTime!=null">modify_time = #{modifyTime},</if>
 		</trim>
 	</update>
 
 	<!-- 查询会议室申请列表 -->
-	<select id="getBorardroomApplyList" resultType="BoardroomApply">
-		select * from zteoa_boardroom_apply
+	<select id="getBorardroomApplyList" resultMap="MyBoardroomApply">
+		select zba.*,zb.name zbname,e.name ename from zteoa_boardroom_apply zba,zteoa_boardroom zb,zteoa_emp e
 		<trim prefix="where" prefixOverrides="and | or">
-			<if test="start != '' and start != null">
-				and start LIKE CONCAT ('%',#{start},'%')
+			zba.eid = e.id AND zba.bid = zb.id
+			<if test="bid != null">
+				AND bid = #{bid}
 			</if>
-			<if test="end !='' and end != null">
-				and end = #{end}	
-			</if>
-			order by create_time DESC limit #{currentPageNo},#{pageSize}
+			order by create_time DESC limit #{currPage},#{pageSize}
 		</trim>
 	</select>
 	
@@ -54,11 +58,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBorardroomApplyCount" resultType="int">
 		select count(1) as count from zteoa_boardroom_apply
 		<trim prefix="where" prefixOverrides="and | or">
-			<if test="start !='' and start != null">
-				and name LIKE CONCAT ('%',#{start},'%')
+			<if test="bid != null">
+				bid = #{bid}
 			</if>
-			<if test="end !='' and end != null">
-				and end = #{end}	
+		</trim>		 
+	</select>
+	
+	<select id="getApplyByEid" resultMap="MyBoardroomApply">
+		select zba.*,zb.name zbname,e.name ename from zteoa_boardroom_apply zba,zteoa_boardroom zb,zteoa_emp e
+		<trim prefix="where" prefixOverrides="and | or">
+			zba.eid = e.id AND zba.bid = zb.id
+			<if test="id != null">
+				AND eid = #{id}
 			</if>
 		</trim>		 
 	</select>

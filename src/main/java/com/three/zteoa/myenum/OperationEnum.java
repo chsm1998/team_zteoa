@@ -6,6 +6,6 @@ package com.three.zteoa.myenum;
  */
 public enum OperationEnum {
 	
-	query, update;
+	QUERY, UPDATE;
 	
 }

@@ -3,13 +3,18 @@ package com.three.zteoa.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.three.zteoa.bean.Emp;
 import com.three.zteoa.bean.Receive;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.ReceiveService;
+import com.three.zteoa.vo.UpdateVo;
 
 /**
  * @author	Vintonsen_lcx
@@ -27,40 +32,51 @@ public class ReceiveController {
 	
 	@RequestMapping("/add")
 	// 添加办公用品申请 
-	public boolean addReceive(Receive receive) throws Exception{
+	public boolean addReceive(@RequestBody Receive receive, HttpSession session) throws Exception{
+		Emp emp = (Emp) session.getAttribute("empSession");
+		receive.setEid(emp.getId());
 		return receiveSeivice.addReceive(receive);
 	}
 		
 	@RequestMapping("/delete")
 	// 通过申请id，删除申请
-	public boolean deleteReceivesById(@Param("receive")Integer receive_id) throws Exception{
+	public boolean deleteReceivesById(Integer receive_id) throws Exception{
 		return receiveSeivice.deleteReceivesById(receive_id);
 	}
 	
-	@RequestMapping("/modify")
+	@RequestMapping("/update")
 	// 修改办公用品申请信息
-	public boolean modifyReceive(Receive receive) throws Exception{
+	public boolean modifyReceive(@RequestBody Receive receive) throws Exception{
 		return receiveSeivice.modifyReceive(receive);
 	}
 	
-	@RequestMapping("queryById")
+	@RequestMapping("queryList")
 	// 通过条件查询-ReceiveList
-	public List<Receive> getReceiveById(@Param("eid")Integer eid,@Param("pid")Integer pid
-			,@Param("category")String category,@Param("currenPageNo")Integer currentPageNo,
-			@Param("pageSize")Integer pageSize ) throws Exception{
-		return receiveSeivice.getReceiveById(eid, pid, category, currentPageNo, pageSize);
-	}
-	
-	@RequestMapping("/count")
-	// 通过条件查询-记录数查询
-	public int getReceiveCount(@Param("id")Integer id,@Param("category")String category) throws Exception{
-		return receiveSeivice.getReceiveCount(id, category);
-	}
-	
-	@RequestMapping("queryAll")
-	// 查询办公用品申请列表
-	public List<Receive> getReceiveList(Receive receive) throws Exception{
+	public List<Receive> getReceiveById(@RequestBody Receive receive) throws Exception{
 		return receiveSeivice.getReceiveList(receive);
 	}
+	
+	@RequestMapping("/queryTotal")
+	// 通过条件查询-记录数查询
+	public int getReceiveCount(@RequestBody(required = false) Receive receive) throws Exception{
+		if (receive == null) {
+			receive = new Receive();
+		}
+		return receiveSeivice.getReceiveCount(receive);
+	}
+	
+	/**
+	 * 鉴权
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return SecurityComponent.isAuthorityProduct(emp);
+	}
+	
+	
 
 }

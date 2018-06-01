@@ -36,4 +36,8 @@ public interface ProductMapper {
 	 * @return
 	 */
 	int getTotal(Product product);
+	
+	List<Product> queryAll();
+	
+	Product queryById(@Param("id") Integer id);
 }

@@ -10,10 +10,10 @@ public interface BoardroomFacService {
 	public boolean addBoardroomFac(BoardroomFacilities boardroomFacilties) throws Exception;
 
 	// 会议设施的数量
-	public int getBorardroomFacCount(int pid,int bid) throws Exception;
+	public int getBorardroomFacCount(Integer pid,Integer bid);
 
 	// 会议设施的列表查询
-	public List<BoardroomFacilities> getBorardroomFacList(int pid, int bid,int currentPageNo,int pageSize) throws Exception;
+	public List<BoardroomFacilities> getBorardroomFacList(BoardroomFacilities boardroomFacilities);
 
 	// 会议设施的删除
 	public boolean deleteBoardroomFac(int id) throws Exception;

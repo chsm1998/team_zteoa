@@ -28,7 +28,10 @@ public class BoardroomFacTest extends BaseTest{
 	@Test
 	//会议设施列表查询
 	public void Test2() throws Exception {
-		boardroomFacService.getBorardroomFacList(0, 0, 0, 5).forEach(System.out::println);
+		BoardroomFacilities boardroomFacilities = new BoardroomFacilities();
+		boardroomFacilities.setCurrPage(1);
+		boardroomFacilities.setPageSize(5);
+		boardroomFacService.getBorardroomFacList(boardroomFacilities).forEach(System.out::println);
 	}
 	@Test
 	//会议设施update测试

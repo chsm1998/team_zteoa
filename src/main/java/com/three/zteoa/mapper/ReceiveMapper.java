@@ -22,16 +22,16 @@ public interface ReceiveMapper {
 	public boolean deleteReceivesById(@Param("receive")Integer receive_id) throws Exception;
 	
 	// 修改办公用品申请信息
-	public boolean modifyReceive(Receive receive) throws Exception;
+	public boolean modifyReceive(Receive receive);
 	
 	// 通过条件查询-ReceiveList
-	public List<Receive> getReceiveById(@Param("eid")Integer eid,@Param("pid")Integer pid
-			,@Param("category")String category,@Param("currenPageNo")Integer currentPageNo,
-			@Param("pageSize")Integer pageSize ) throws Exception;
+	public List<Receive> getReceiveById(Receive receive) throws Exception;
 	
 	// 通过条件查询-记录数查询
-	public int getReceiveCount(@Param("id")Integer id,@Param("category")String category) throws Exception;
+	public int getReceiveCount(Receive receive) throws Exception;
 
 	// 查询办公用品申请列表
 	public List<Receive> getReceiveList(Receive receive) throws Exception;
+	
+	Receive queryById(Receive receive);
 }

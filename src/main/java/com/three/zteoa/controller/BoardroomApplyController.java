@@ -3,13 +3,18 @@ package com.three.zteoa.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.BoardroomApply;
+import com.three.zteoa.bean.Emp;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.BoardroomApplyService;
+import com.three.zteoa.vo.UpdateVo;
 
 /**
  * @author	Vintonsen_lcx
@@ -28,7 +33,10 @@ public class BoardroomApplyController{
 	
 	@RequestMapping("/add")
 	// 添加办公室申请
-	public boolean addBoardrommApply(BoardroomApply boardroomApply) throws Exception{
+	public boolean addBoardrommApply(@RequestBody BoardroomApply boardroomApply, HttpSession session) throws Exception{
+		Emp emp = (Emp) session.getAttribute("empSession");
+		boardroomApply.setEid(emp.getId());
+		System.out.println(boardroomApply);
 		return boardroomApplyService.addBoardrommApply(boardroomApply);
 	}
 	
@@ -38,16 +46,19 @@ public class BoardroomApplyController{
 		return boardroomApplyService.deleteBoardroomApply(id);
 	}
 
-	@RequestMapping("/modify")
+	@RequestMapping("/update")
 	// 修改办公室申请
-	public boolean modifyBoardroomApply(BoardroomApply boardroomApply) throws Exception{
+	public boolean modifyBoardroomApply(@RequestBody BoardroomApply boardroomApply) throws Exception{
 		return boardroomApplyService.modifyBoardroomApply(boardroomApply);
 	}
 	
-	@RequestMapping("/queryAll")
+	@RequestMapping("/queryList")
 	// 查询办公室申请列表
-	public List<BoardroomApply> getBoardroomApplyList(BoardroomApply boardroomApply,@Param("currentPageNo")int currentPageNo,@Param("pageSize")int pageSize) throws Exception{
-		return boardroomApplyService.getBoardroomApplyList(boardroomApply, currentPageNo, pageSize);
+	public List<BoardroomApply> getBoardroomApplyList(@RequestBody BoardroomApply boardroomApply) throws Exception{
+		if (boardroomApply == null) {
+			boardroomApply = new BoardroomApply();
+		}
+		return boardroomApplyService.getBoardroomApplyList(boardroomApply);
 	}
 	
 	@RequestMapping("/queryById")
@@ -56,10 +67,32 @@ public class BoardroomApplyController{
 		return boardroomApplyService.getBoardroomApplyById(id);
 	}
 
-	@RequestMapping("/count")
+	@RequestMapping("/queryTotal")
 	// 查询办公室申请数量
-	public int getCount(@Param("id")Integer id,@Param("is_agree")boolean is_agree) throws Exception{
-		return boardroomApplyService.getCount(id, is_agree);
+	public int getCount(@RequestBody BoardroomApply boardroomApply) throws Exception{
+		return boardroomApplyService.getCount(boardroomApply);
+	}
+	
+	/**
+	 * 鉴权
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return SecurityComponent.isAuthorityProduct(emp);
+	}
+	
+	/**
+	 * 所有申请列表
+	 * @return
+	 */
+	@RequestMapping("/getAllApply")
+	public List<BoardroomApply> getAllApply(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return boardroomApplyService.getApplyByEid(emp);
 	}
 
 }

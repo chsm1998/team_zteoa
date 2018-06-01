@@ -41,10 +41,11 @@ public class EmpController {
 	@PostMapping("/update")
 	public UpdateVo update(@RequestBody Emp updateEmp, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("empSession");
-		updateEmp = empService.queryByUsername(updateEmp.getUsername());
-		UpdateVo updateVo = SecurityComponent.isUpdateAuthority(emp, updateEmp.getPosition().getName());
+		Emp updateEmp1 = empService.queryByUsername(updateEmp.getUsername());
+		System.out.println(updateEmp);
+		UpdateVo updateVo = SecurityComponent.isUpdateAuthority(emp, updateEmp1.getPosition().getName());
 		if (updateVo.isBl()) {
-			return empService.update(emp);
+			return empService.update(updateEmp);
 		}
 		return updateVo;
 	}

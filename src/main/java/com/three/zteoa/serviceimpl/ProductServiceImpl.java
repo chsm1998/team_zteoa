@@ -71,4 +71,9 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.getTotal(product);
 	}
 
+	@Override
+	public List<Product> queryAll() {
+		return productMapper.queryAll();
+	}
+
 }

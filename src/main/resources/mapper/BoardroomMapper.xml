@@ -76,4 +76,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 	</select>
 	
+	<select id="queryAll" resultType="Boardroom">
+		SELECT * FROM zteoa_boardroom;
+	</select>
+	
 </mapper>

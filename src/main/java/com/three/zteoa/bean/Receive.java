@@ -17,8 +17,15 @@ public class Receive {
 	private Integer num;// 申请数量
 	private String category;// 申请类别
 	private String reason;// 申请原因
+	private Integer agree;
+	private Integer bid;
 	private Date createTime;// 申请时间
 	private Date modifyTime;// 修改时间
+	private Emp emp;
+	private Product product;
+
+	private Integer currPage;
+	private Integer pageSize;
 
 	public Integer getId() {
 		return id;
@@ -82,6 +89,62 @@ public class Receive {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	public Emp getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Emp emp) {
+		this.emp = emp;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Integer getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(Integer currPage) {
+		this.currPage = currPage;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public Integer getAgree() {
+		return agree;
+	}
+
+	public void setAgree(Integer agree) {
+		this.agree = agree;
+	}
+
+	public Integer getBid() {
+		return bid;
+	}
+
+	public void setBid(Integer bid) {
+		this.bid = bid;
+	}
+
+	@Override
+	public String toString() {
+		return "Receive [id=" + id + ", eid=" + eid + ", pid=" + pid + ", num=" + num + ", category=" + category
+				+ ", reason=" + reason + ", agree=" + agree + ", bid=" + bid + ", createTime=" + createTime
+				+ ", modifyTime=" + modifyTime + ", emp=" + emp + ", product=" + product + ", currPage=" + currPage
+				+ ", pageSize=" + pageSize + "]";
 	}
 
 }

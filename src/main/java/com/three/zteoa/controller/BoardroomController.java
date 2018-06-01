@@ -80,5 +80,10 @@ public class BoardroomController extends BaseController {
 		return boardroomService.getBorardroomCount(boardroom.getName(), null);
 	}
 	
+	@RequestMapping("/queryAll")
+	public List<Boardroom> queryAll() {
+		return boardroomService.queryAll();
+	}
+	
 
 }

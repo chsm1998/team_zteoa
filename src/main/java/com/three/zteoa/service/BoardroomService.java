@@ -25,4 +25,6 @@ public interface BoardroomService {
 
 	// 会议室名称的验证
 	public Boardroom getBoardroomName(String name) throws Exception;
+	
+	List<Boardroom> queryAll();
 }

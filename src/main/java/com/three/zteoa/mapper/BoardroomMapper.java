@@ -33,4 +33,6 @@ public interface BoardroomMapper {
 
 	// 会议室名称的验证
 	public Boardroom getBoardroomName(@Param("name") String name) throws Exception;
+	
+	public List<Boardroom> queryAll();
 }

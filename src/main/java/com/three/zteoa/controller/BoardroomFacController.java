@@ -3,8 +3,10 @@ package com.three.zteoa.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,43 +14,42 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.BoardroomFacilities;
+import com.three.zteoa.bean.Emp;
+import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.BoardroomFacService;
+import com.three.zteoa.vo.UpdateVo;
 
 @RestController
-@RequestMapping("/boardroomFac")
+@RequestMapping("/boardroomFacilities")
 public class BoardroomFacController {
 	@Resource
 	private BoardroomFacService boardroomFacService;
 
 	// 会议设施列表
-	@RequestMapping("/boardroomFacList.html")
-	public List<BoardroomFacilities> getBorardroomFacList(Model model, @RequestParam(value = "pid", required = false) int pid,
-			@RequestParam(value = "bid", required = false) int bid,
-			@RequestParam(value = "pageIndex", required = false) String pageIndex) throws Exception {
-		int currentPageNo = 0;
-		int pageSize = 5;
-		return boardroomFacService.getBorardroomFacList(pid, bid, currentPageNo, pageSize);
+	@RequestMapping("/queryList")
+	public List<BoardroomFacilities> getBorardroomFacList(@RequestBody BoardroomFacilities boardroomFacilities) {
+		return boardroomFacService.getBorardroomFacList(boardroomFacilities);
 	}
 
 	// 增加会议设施
-	@RequestMapping(value = "/boardroomfacaddsave.html", method = RequestMethod.POST)
-	public Object addboardroomFacSave(BoardroomFacilities boardroomFacilities) throws Exception {
+	@RequestMapping("/add")
+	public Object addboardroomFacSave(@RequestBody BoardroomFacilities boardroomFacilities) throws Exception {
 		boolean flag = false;
 		flag = boardroomFacService.addBoardroomFac(boardroomFacilities);
 		return flag;
 	}
 
 	// 修改会议设施
-	@RequestMapping(value = "/boardroomupdatefacsave.html", method = RequestMethod.POST)
-	public Object updateboardroomFacSave(BoardroomFacilities boardroomFacilities) throws Exception {
+	@RequestMapping("/update")
+	public Object updateboardroomFacSave(@RequestBody BoardroomFacilities boardroomFacilities) throws Exception {
 		boolean flag = false;
 		flag = boardroomFacService.updateBoardroomFac(boardroomFacilities);
 		return flag;
 	}
 
 	// 删除会议设施
-	@RequestMapping(value = "/boardroomdeletefac.html", method = RequestMethod.GET)
-	public Object deleteboardroomFac(@RequestParam Integer id) throws Exception {
+	@RequestMapping("/delete")
+	public Object deleteboardroomFac(Integer id) throws Exception {
 		boolean flag = false;
 		flag = boardroomFacService.deleteBoardroomFac(id);
 		return flag;
@@ -59,6 +60,23 @@ public class BoardroomFacController {
 	@ResponseBody
 	public Object viewfac(@RequestParam int id) throws Exception {
 		return boardroomFacService.getBoardroomFacById(id);
+	}
+	
+	/**
+	 * 鉴权
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/isAuthority")
+	public UpdateVo isAuthority(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return SecurityComponent.isAuthorityProduct(emp);
+	}
+	
+	@RequestMapping("/queryTotal")
+	public int queryTotal(@RequestBody(required = false) BoardroomFacilities boardroomFacilities) {
+		return boardroomFacService.getBorardroomFacCount(null, boardroomFacilities.getBid());
 	}
 
 }

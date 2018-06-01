@@ -22,14 +22,14 @@ public class SecurityComponent {
 
 	private static Map<String, List<String>> authority;
 	private static final String NOT_AUTHORITY = "权限不足";
-	public static final String EMP_UPDATE = OperationEnum.update.toString() + "emp";
-	public static final String POSITION_UPDATE = OperationEnum.update.toString() + "position";
-	public static final String DEPT_UPDATE = OperationEnum.update.toString() + "dept";
-	public static final String PRODUCT_UPDATE = OperationEnum.update.toString() + "product";
+	public static final String EMP_UPDATE = OperationEnum.UPDATE.toString() + "emp";
+	public static final String POSITION_UPDATE = OperationEnum.UPDATE.toString() + "position";
+	public static final String DEPT_UPDATE = OperationEnum.UPDATE.toString() + "dept";
+	public static final String PRODUCT_UPDATE = OperationEnum.UPDATE.toString() + "product";
 
 	static {
-		String[] emp = { PositionEnum.manager.getName(), PositionEnum.generalmanager.getName() };
-		String[] position = { PositionEnum.generalmanager.getName() };
+		String[] emp = { PositionEnum.MANAGER.getName(), PositionEnum.GENERALMANAGER.getName() };
+		String[] position = { PositionEnum.GENERALMANAGER.getName() };
 		List<String> empUpdate = Arrays.asList(emp);
 		List<String> positionUpdate = Arrays.asList(position);
 		authority = new HashMap<>();

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.three.zteoa.bean.BoardroomApply;
+import com.three.zteoa.bean.Emp;
 
 /**
  * @author	Vintonsen_lcx
@@ -25,11 +26,18 @@ public interface BoardroomApplyService {
 	public boolean modifyBoardroomApply(BoardroomApply boardroomApply) throws Exception;
 	
 	// 查询办公室申请列表
-	public List<BoardroomApply> getBoardroomApplyList(BoardroomApply boardroomApply,@Param("currentPageNo")int currentPageNo,@Param("pageSize")int pageSize) throws Exception;
+	public List<BoardroomApply> getBoardroomApplyList(BoardroomApply boardroomApply) throws Exception;
 	
 	// 根据id查询办公室申请
 	public BoardroomApply getBoardroomApplyById(@Param("id")Integer id) throws Exception;
 
 	// 查询办公室申请数量
-	public int getCount(@Param("id")Integer id,@Param("is_agree")boolean is_agree) throws Exception;
+	public int getCount(BoardroomApply boardroomApply) throws Exception;
+	
+	/**
+	 * 获取所有申请列表
+	 * @param eid 用户id
+	 * @return
+	 */
+	List<BoardroomApply> getApplyByEid(Emp emp);
 }

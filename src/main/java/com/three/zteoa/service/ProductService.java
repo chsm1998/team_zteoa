@@ -36,4 +36,6 @@ public interface ProductService {
 	 * @return
 	 */
 	int getTotal(Product product);
+	
+	List<Product> queryAll();
 }

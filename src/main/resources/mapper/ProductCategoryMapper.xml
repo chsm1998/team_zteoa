@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM zteoa_product_category
 		<where>
 			<if test="category != null and category != ''">
-				category = #{category}
+				category LIKE CONCAT('%',#{category},'%')
 			</if>
 		</where>
 	</select>

@@ -1,6 +1,7 @@
 package com.three.zteoa.serviceimpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.three.zteoa.bean.BoardroomApply;
+import com.three.zteoa.bean.Emp;
 import com.three.zteoa.mapper.BoardroomApplyMapper;
 import com.three.zteoa.service.BoardroomApplyService;
 /**
@@ -23,10 +25,11 @@ public class BoardroomApplyServiceImpl implements BoardroomApplyService{
 	private BoardroomApplyMapper boardroomApplyMapper;
 	@Override
 	public boolean addBoardrommApply(BoardroomApply boardroomApply) throws Exception {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		flag = boardroomApplyMapper.addBoardrommApply(boardroomApply);
-		return flag;
+		boardroomApply.setAgree(1);
+		Date date = new Date();
+		boardroomApply.setCreateTime(date);
+		boardroomApply.setModifyTime(date);
+		return boardroomApplyMapper.addBoardroomApply(boardroomApply);
 	}
 
 	@Override
@@ -55,21 +58,26 @@ public class BoardroomApplyServiceImpl implements BoardroomApplyService{
 	}
 
 	@Override
-	public int getCount(Integer id, boolean is_agree) throws Exception {
+	public int getCount(BoardroomApply boardroomApply) throws Exception {
 		// TODO Auto-generated method stub
 		int result = 0;
-		result = boardroomApplyMapper.getCount(id, is_agree);
+		result = boardroomApplyMapper.getBorardroomApplyCount(boardroomApply);
 		return result;
 	}
 
 	@Override
-	public List<BoardroomApply> getBoardroomApplyList(BoardroomApply boardroomApply, int currentPageNo, int pageSize)
+	public List<BoardroomApply> getBoardroomApplyList(BoardroomApply boardroomApply)
 			throws Exception {
 		// TODO Auto-generated method stub
 		List<BoardroomApply> boardroomApplyList = new ArrayList<BoardroomApply>();
-		currentPageNo = (currentPageNo - 1) * pageSize;
-		boardroomApplyList = boardroomApplyMapper.getBoardroomApplyList(boardroomApply, currentPageNo, pageSize);
+		boardroomApply.setCurrPage((boardroomApply.getCurrPage() - 1) * boardroomApply.getPageSize());
+		boardroomApplyList = boardroomApplyMapper.getBorardroomApplyList(boardroomApply);
 		return boardroomApplyList;
+	}
+
+	@Override
+	public List<BoardroomApply> getApplyByEid(Emp emp) {
+		return boardroomApplyMapper.getApplyByEid(emp);
 	}
 
 }

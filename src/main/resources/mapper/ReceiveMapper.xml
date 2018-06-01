@@ -4,57 +4,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.three.zteoa.mapper.ReceiveMapper">
 
-	<resultMap type="Receive" id="ReceiveList">
-		<result property="id" column="id" />
-		<result property="eid" column="eid" />
-		<result property="pid" column="pid" />
-		<result property="num" column="num" />
-		<result property="category" column="category" />
-		<result property="reason" column="reason" />
+	<resultMap type="Receive" id="myReceive">
+		<result property="emp.name" column="ename"/>
+		<result property="product.name" column="pname"/>
 	</resultMap>
 
 	<!-- 添加办公用品申请 -->
 	<insert id="addReceive" parameterType="Receive">
-		INSERT INTO zteoa_receive (id,eid,pid,num,category,reason,create_time,modify_time)
-				VALUES (#{id},#{eid},#{pid},#{num},#{category},#{reason},#{create_time},#{modify_time})
+		INSERT INTO zteoa_receive
+		(id,eid,pid,bid,num,agree,category,reason,create_time,modify_time)
+		VALUES
+		(#{id},#{eid},#{pid},#{bid},#{num},#{agree},#{category},#{reason},#{createTime},#{modifyTime})
 	</insert>
-	
+
 	<!-- 通过id删除办公用品申请 -->
 	<delete id="delectReceiveById" parameterType="Integer">
-		delect from zteoa_receive where id=#{id}
+		delect from
+		zteoa_receive where id=#{id}
 	</delete>
-	
+
 	<!-- 修改办公用品申请 -->
 	<update id="modifyReceive" parameterType="Receive">
 		update zteoa_receive
-			<trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
-				<if test="id != null">id=#{id},</if>
-				<if test="eid != null">eid=#{eid},</if>
-				<if test="pid != null">pid=#{pid},</if>
-				<if test="num != null">num=#{num},</if>
-				<if test="category != null">category=#{category},</if>
-				<if test="reason != null">reason=#{reason},</if>
-				<if test="modify_time != null">modify_time=#{modify_time},</if>
-			</trim>
+		<trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+			<if test="id != null">id=#{id},</if>
+			<if test="eid != null">eid=#{eid},</if>
+			<if test="pid != null">pid=#{pid},</if>
+			<if test="bid != null">bid=#{bid},</if>
+			<if test="num != null">num=#{num},</if>
+			<if test="category != null">category=#{category},</if>
+			<if test="reason != null">reason=#{reason},</if>
+			<if test="agree != null">agree=#{agree},</if>
+			<if test="modifyTime != null">modify_time=#{modifyTime},</if>
+		</trim>
 	</update>
-	
+
 	<!-- 查询办公用品申请列表 -->
-	<select id="getReceiveList" resultMap="ReceiveList">
-		select * from zteoa_receive
-		<if test="category != null">
-			and category = #{category}
-		</if>
+	<select id="getReceiveList" resultMap="myReceive">
+		select zr.*,ze.name ename,zp.name pname from zteoa_receive zr, zteoa_emp ze, zteoa_product zp
+		<where>
+			zr.eid = ze.id AND zr.pid = zp.id
+			<if test="pid != null">
+				AND pid = #{pid}
+			</if>
+		</where>
+		LIMIT #{currPage},#{pageSize}
 	</select>
-	
+
 	<!-- 根据id查询办公用品申请 -->
-	<select id="getReceiveById" resultMap="ReceiveList">
+	<select id="getReceiveById" resultMap="myReceive">
 		select * from zteoa_receive
-		<if test="id!=null">and p.id=#{id}</if>	
+		<if test="id!=null">and p.id=#{id}</if>
 	</select>
-	
+
 	<!-- 统计办公用品申请数量 -->
 	<select id="getReceiveCount" resultType="int">
-		select count(id) from zteoa_product_Receive
+		select count(*) from zteoa_receive
+		<where>
+			<if test="pid != null">
+				pid = #{pid}
+			</if>
+		</where>
 	</select>
 	
+	<select id="queryById" resultMap="myReceive">
+		select zr.*,ze.name ename,zp.name pname from zteoa_receive zr, zteoa_emp ze, zteoa_product zp
+		<where>
+			zr.eid = ze.id AND zr.pid = zp.id
+			<if test="id != null">
+				AND zr.id = #{id}
+			</if>
+		</where>
+	</select>
+
 </mapper>

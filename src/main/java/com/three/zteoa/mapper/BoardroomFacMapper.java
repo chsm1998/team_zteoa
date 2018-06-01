@@ -13,14 +13,13 @@ import com.three.zteoa.bean.BoardroomFacilities;
  */
 public interface BoardroomFacMapper {
 	// 增加会议设施
-	public boolean addBoardroomFac(BoardroomFacilities boardroomFacilties) throws Exception;
+	public boolean addBoardroomFac(BoardroomFacilities boardroomFacilties);
 
 	// 会议设施的数量
-	public int getBorardroomFacCount(@Param("pid") int pid,@Param("bid") int bid) throws Exception;
+	public int getBorardroomFacCount(@Param("pid") Integer pid,@Param("bid") Integer bid);
 
 	// 会议设施的列表查询
-	public List<BoardroomFacilities> getBorardroomFacList(@Param("pid") int pid, @Param("bid") int bid,
-			@Param("currentPageNo") int currentPageNo, @Param("pageSize") int pageSize) throws Exception;
+	public List<BoardroomFacilities> getBorardroomFacList(BoardroomFacilities boardroomFacilities);
 
 	// 会议设施的删除
 	public boolean deleteBoardroomFac(@Param("id") int id) throws Exception;

@@ -15,18 +15,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</trim>
 	</select>
+	
 	<!-- 会议设施的列表 -->
 	<select id="getBorardroomFacList" resultType="BoardroomFacilities">
 		SELECT z.*,b.name AS zBroomName,p.name AS zProductName 
 		FROM zteoa_boardroom_facilities z,zteoa_boardroom b,zteoa_product p 
 		WHERE z.bid = b.id AND z.pid = p.id
-		<if test="pid!= null">
+		<if test="pid != null">
 			and z.pid = #{pid}
 		</if>
 		<if test="bid != null">
 			and z.bid = #{bid}
 		</if>
-		order by create_time DESC limit #{currentPageNo},#{pageSize}
+		order by create_time DESC limit #{currPage},#{pageSize}
 		
 	</select>
 	<!-- 会议设施的增加 -->

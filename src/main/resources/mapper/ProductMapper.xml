@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="categoryId!=null">
 				category_id = #{categoryId},
 			</if>
-			<if test="modifyTime!=null and  modifyTime!=''">modify_time=#{modifyTime},</if>
+			<if test="modifyTime!=null">modify_time=#{modifyTime},</if>
 		</trim>
 	</update>
 
@@ -81,5 +81,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.id=p.category_id
 		and
 		c.id=#{id}
+	</select>
+	
+	<select id="queryAll" resultType="Product">
+		SELECT * FROM zteoa_product
+	</select>
+	
+	<select id="queryById" resultType="Product">
+		SELECT * FROM zteoa_product WHERE id = #{id}
 	</select>
 </mapper>

@@ -74,4 +74,9 @@ public class BoardroomServiceImpl implements BoardroomService {
 		return boardroom;
 	}
 
+	@Override
+	public List<Boardroom> queryAll() {
+		return boardroomMapper.queryAll();
+	}
+
 }

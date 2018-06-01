@@ -99,4 +99,9 @@ public class ProductController {
 		}
 		return productService.getTotal(product);
 	}
+	
+	@RequestMapping("/queryAll")
+	public List<Product> queryAll() {
+		return productService.queryAll();
+	}
 }

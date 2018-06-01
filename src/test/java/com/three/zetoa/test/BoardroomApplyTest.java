@@ -34,7 +34,7 @@ public class BoardroomApplyTest extends BaseTest{
 		Date b = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("2018-05-31 18:00");
  		boardroomApply.setEnd(b);
  		boardroomApply.setCreateTime(new Date());
- 		boardroomApply.setAgree(true);
+// 		boardroomApply.setAgree(true);
  		boardroomApply.setEid(1);
  		flag = boardroomApplyService.addBoardrommApply(boardroomApply);
  		System.out.println(flag);
@@ -56,7 +56,7 @@ public class BoardroomApplyTest extends BaseTest{
 		boardroomApply.setStart(a);
 		Date b = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("2018-06-31 18:00");
  		boardroomApply.setEnd(b);
- 		boardroomApply.setAgree(true);
+// 		boardroomApply.setAgree(true);
  		boardroomApply.setEid(1);
  		boardroomApply.setModifyTime(new Date());
  		flag = boardroomApplyService.modifyBoardroomApply(boardroomApply);
@@ -68,7 +68,7 @@ public class BoardroomApplyTest extends BaseTest{
 	public void queryAllTest() throws Exception{
 
 		try {
-			boardroomApplyService.getBoardroomApplyList(null,0,5).forEach(System.out::println);
+//			boardroomApplyService.getBoardroomApplyList(null,0,5).forEach(System.out::println);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -88,7 +88,7 @@ public class BoardroomApplyTest extends BaseTest{
 	
 	public void countTest() throws Exception{
 		try {
-			boardroomApplyService.getCount(1, true);
+//			boardroomApplyService.getCount(1, true);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

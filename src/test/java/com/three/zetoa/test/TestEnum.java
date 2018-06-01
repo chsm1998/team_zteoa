@@ -12,13 +12,13 @@ public class TestEnum {
 		Emp emp = new Emp();
 		Emp updateEmp = new Emp();
 		Position position1 = new Position();
-		position1.setName(PositionEnum.manager.getName());
+		position1.setName(PositionEnum.MANAGER.getName());
 		Position position2 = new Position();
-		position2.setName(PositionEnum.manager.getName());
+		position2.setName(PositionEnum.MANAGER.getName());
 		emp.setPosition(position1);
 		updateEmp.setPosition(position2);
 		UpdateVo updateVo = SecurityComponent.isAuthority(emp, updateEmp);
-		updateVo = SecurityComponent.isUpdateAuthority(emp, PositionEnum.manager.getName());
+		updateVo = SecurityComponent.isUpdateAuthority(emp, PositionEnum.MANAGER.getName());
 		System.out.println(updateVo);
 	}
 
