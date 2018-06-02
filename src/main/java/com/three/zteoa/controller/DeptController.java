@@ -56,11 +56,5 @@ public class DeptController {
 	public boolean queryByName(String name) {
 		return deptService.queryByName(name);
 	}
-	
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityDept(emp);
-	}
 
 }

@@ -64,19 +64,5 @@ public class ReceiveController {
 		}
 		return receiveSeivice.getReceiveCount(receive);
 	}
-	
-	/**
-	 * 鉴权
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityProduct(emp);
-	}
-	
-	
 
 }

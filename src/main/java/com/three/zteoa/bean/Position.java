@@ -2,8 +2,12 @@ package com.three.zteoa.bean;
 
 import java.util.Date;
 
-public class Position {
+public class Position extends PageBean {
 	private Integer id;
+
+	private Integer rank;
+
+	private Integer bid;
 
 	private String name;
 
@@ -11,32 +15,28 @@ public class Position {
 
 	private Date modifyTime;
 
-	private Integer currPage;
-
-	private Integer pageSize;
-
-	public Integer getCurrPage() {
-		return currPage;
-	}
-
-	public void setCurrPage(Integer currPage) {
-		this.currPage = currPage;
-	}
-
-	public Integer getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
-
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public Integer getBid() {
+		return bid;
+	}
+
+	public void setBid(Integer bid) {
+		this.bid = bid;
 	}
 
 	public String getName() {
@@ -65,19 +65,8 @@ public class Position {
 
 	@Override
 	public String toString() {
-		return "Position [id=" + id + ", name=" + name + ", createTime=" + createTime + ", modifyTime=" + modifyTime
-				+ "]";
-	}
-
-	public Position(String name, Date time) {
-		super();
-		this.name = name;
-		this.createTime = time;
-		this.modifyTime = time;
-	}
-
-	public Position() {
-		super();
+		return "Position [id=" + id + ", rank=" + rank + ", bid=" + bid + ", name=" + name + ", createTime="
+				+ createTime + ", modifyTime=" + modifyTime + "]";
 	}
 
 }

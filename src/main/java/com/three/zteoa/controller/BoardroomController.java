@@ -21,7 +21,7 @@ import com.three.zteoa.vo.UpdateVo;
 
 @RestController
 @RequestMapping("/boardroom")
-public class BoardroomController extends BaseController {
+public class BoardroomController {
 	@Resource
 	private BoardroomService boardroomService;
 
@@ -62,28 +62,15 @@ public class BoardroomController extends BaseController {
 	public Object userCodeIsExist(@RequestParam String name) throws Exception {
 		return boardroomService.getBoardroomName(name);
 	}
-	
-	/**
-	 * 鉴权
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityProduct(emp);
-	}
-	
+
 	@RequestMapping("/queryTotal")
 	public int queryTotal(Boardroom boardroom) {
 		return boardroomService.getBorardroomCount(boardroom.getName(), null);
 	}
-	
+
 	@RequestMapping("/queryAll")
 	public List<Boardroom> queryAll() {
 		return boardroomService.queryAll();
 	}
-	
 
 }

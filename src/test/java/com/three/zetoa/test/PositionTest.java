@@ -17,11 +17,11 @@ public class PositionTest extends BaseTest {
 	@Test
 	@Rollback(false)
 	public void add() {
-		Position[] positions = { new Position("普通员工", new Date()), new Position("部门经理", new Date()),
-				new Position("总经理", new Date()), new Position("财务", new Date()) };
-		for (Position position : positions) {
-			positionService.add(position);
-		}
+//		Position[] positions = { new Position("普通员工", new Date()), new Position("部门经理", new Date()),
+//				new Position("总经理", new Date()), new Position("财务", new Date()) };
+//		for (Position position : positions) {
+//			positionService.add(position);
+//		}
 	}
 
 }

@@ -62,18 +62,6 @@ public class BoardroomFacController {
 		return boardroomFacService.getBoardroomFacById(id);
 	}
 	
-	/**
-	 * 鉴权
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityProduct(emp);
-	}
-	
 	@RequestMapping("/queryTotal")
 	public int queryTotal(@RequestBody(required = false) BoardroomFacilities boardroomFacilities) {
 		return boardroomFacService.getBorardroomFacCount(null, boardroomFacilities.getBid());

@@ -165,6 +165,126 @@ public class PositionExample {
             return (Criteria) this;
         }
 
+        public Criteria andRankIsNull() {
+            addCriterion("rank is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankIsNotNull() {
+            addCriterion("rank is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankEqualTo(Integer value) {
+            addCriterion("rank =", value, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankNotEqualTo(Integer value) {
+            addCriterion("rank <>", value, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankGreaterThan(Integer value) {
+            addCriterion("rank >", value, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rank >=", value, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankLessThan(Integer value) {
+            addCriterion("rank <", value, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankLessThanOrEqualTo(Integer value) {
+            addCriterion("rank <=", value, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankIn(List<Integer> values) {
+            addCriterion("rank in", values, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankNotIn(List<Integer> values) {
+            addCriterion("rank not in", values, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankBetween(Integer value1, Integer value2) {
+            addCriterion("rank between", value1, value2, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andRankNotBetween(Integer value1, Integer value2) {
+            addCriterion("rank not between", value1, value2, "rank");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidIsNull() {
+            addCriterion("bid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidIsNotNull() {
+            addCriterion("bid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidEqualTo(Integer value) {
+            addCriterion("bid =", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidNotEqualTo(Integer value) {
+            addCriterion("bid <>", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidGreaterThan(Integer value) {
+            addCriterion("bid >", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("bid >=", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidLessThan(Integer value) {
+            addCriterion("bid <", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidLessThanOrEqualTo(Integer value) {
+            addCriterion("bid <=", value, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidIn(List<Integer> values) {
+            addCriterion("bid in", values, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidNotIn(List<Integer> values) {
+            addCriterion("bid not in", values, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidBetween(Integer value1, Integer value2) {
+            addCriterion("bid between", value1, value2, "bid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBidNotBetween(Integer value1, Integer value2) {
+            addCriterion("bid not between", value1, value2, "bid");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;

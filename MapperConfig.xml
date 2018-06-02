@@ -7,8 +7,6 @@
 
 	<context id="mysql">
 		
-		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
-		
 		<commentGenerator>
 			<!-- 去除生成代码注释 -->
 			<property name="suppressAllComments" value="true" />
@@ -45,8 +43,10 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		<table tableName="zteoa_emp" domainObjectName="Emp"></table>
+ 		<!-- <table tableName="zteoa_emp" domainObjectName="Emp"></table> 
 		<table tableName="zteoa_position" domainObjectName="Position"></table>
-		<table tableName="zteoa_dept" domainObjectName="Dept"></table>
+		<table tableName="zteoa_dept" domainObjectName="Dept"></table> -->
+		<table tableName="zteoa_authority" domainObjectName="Authority"></table>
+		<table tableName="zteoa_module" domainObjectName="Module"></table>
 	</context>
 </generatorConfiguration>

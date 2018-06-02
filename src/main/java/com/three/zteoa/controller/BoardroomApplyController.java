@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.three.zteoa.bean.BoardroomApply;
 import com.three.zteoa.bean.Emp;
 import com.three.zteoa.component.SecurityComponent;
+import com.three.zteoa.myenum.TypeEnum;
 import com.three.zteoa.service.BoardroomApplyService;
 import com.three.zteoa.vo.UpdateVo;
 
@@ -29,15 +31,20 @@ public class BoardroomApplyController{
 
 	@Resource
 	private BoardroomApplyService boardroomApplyService;
+	@Autowired
+	private SecurityComponent securityComponent;
 	
 	
 	@RequestMapping("/add")
 	// 添加办公室申请
-	public boolean addBoardrommApply(@RequestBody BoardroomApply boardroomApply, HttpSession session) throws Exception{
+	public UpdateVo addBoardrommApply(@RequestBody BoardroomApply boardroomApply, HttpSession session) throws Exception{
 		Emp emp = (Emp) session.getAttribute("empSession");
-		boardroomApply.setEid(emp.getId());
-		System.out.println(boardroomApply);
-		return boardroomApplyService.addBoardrommApply(boardroomApply);
+		UpdateVo updateVo = securityComponent.isAuthorityUpdate(emp, TypeEnum.ADD);
+		if (updateVo.isBl()) {
+			boardroomApply.setEid(emp.getId());
+			return boardroomApplyService.addBoardrommApply(boardroomApply);
+		}
+		return updateVo;
 	}
 	
 	@RequestMapping("/delete")
@@ -71,18 +78,6 @@ public class BoardroomApplyController{
 	// 查询办公室申请数量
 	public int getCount(@RequestBody BoardroomApply boardroomApply) throws Exception{
 		return boardroomApplyService.getCount(boardroomApply);
-	}
-	
-	/**
-	 * 鉴权
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityProduct(emp);
 	}
 	
 	/**

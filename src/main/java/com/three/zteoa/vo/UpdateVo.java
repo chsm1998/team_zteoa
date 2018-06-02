@@ -1,5 +1,10 @@
 package com.three.zteoa.vo;
 
+/**
+ * 更新返回视图对象
+ * @author chsm
+ * @date 2018年6月2日
+ */
 public class UpdateVo {
 
 	private String message;

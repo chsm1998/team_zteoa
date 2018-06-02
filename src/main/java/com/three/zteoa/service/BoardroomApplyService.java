@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.three.zteoa.bean.BoardroomApply;
 import com.three.zteoa.bean.Emp;
+import com.three.zteoa.vo.UpdateVo;
 
 /**
  * @author	Vintonsen_lcx
@@ -17,7 +18,7 @@ import com.three.zteoa.bean.Emp;
 public interface BoardroomApplyService {
 	
 	// 添加办公室申请
-	public boolean addBoardrommApply(BoardroomApply boardroomApply) throws Exception;
+	public UpdateVo addBoardrommApply(BoardroomApply boardroomApply) throws Exception;
 	
 	// 删除办公室申请
 	public boolean deleteBoardroomApply(@Param("id")Integer id) throws Exception;

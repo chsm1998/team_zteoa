@@ -36,7 +36,7 @@ public class BoardroomApplyTest extends BaseTest{
  		boardroomApply.setCreateTime(new Date());
 // 		boardroomApply.setAgree(true);
  		boardroomApply.setEid(1);
- 		flag = boardroomApplyService.addBoardrommApply(boardroomApply);
+// 		flag = boardroomApplyService.addBoardrommApply(boardroomApply);
  		System.out.println(flag);
 	}
 	

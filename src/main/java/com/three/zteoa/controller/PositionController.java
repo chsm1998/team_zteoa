@@ -58,10 +58,4 @@ public class PositionController {
 		return positionService.getCount(position);
 	}
 
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityPosition(emp);
-	}
-
 }

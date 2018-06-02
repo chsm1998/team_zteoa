@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.three.zteoa.bean.Authority;
 import com.three.zteoa.bean.Emp;
-import com.three.zteoa.bean.Position;
 import com.three.zteoa.component.SecurityComponent;
+import com.three.zteoa.myenum.ModuleEnum;
+import com.three.zteoa.myenum.TypeEnum;
+import com.three.zteoa.service.AuthorityService;
 import com.three.zteoa.service.EmpService;
 import com.three.zteoa.service.PositionService;
 import com.three.zteoa.vo.UpdateVo;
@@ -25,13 +28,18 @@ public class EmpController {
 	@Autowired
 	private EmpService empService;
 	@Autowired
+	private SecurityComponent securityComponent;
+	@Autowired
 	private PositionService positionService;
+	@Autowired
+	private AuthorityService authorityService;
 
 	@PostMapping("/add")
 	public UpdateVo add(@RequestBody Emp updateEmp, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("empSession");
-		Position position = positionService.queryById(updateEmp.getPid());
-		UpdateVo updateVo = SecurityComponent.isUpdateAuthority(emp, position.getName());
+		// 查询出position，否则进行isAuthorityUpdateEmp会抛出NPE异常
+		updateEmp.setPosition(positionService.queryById(updateEmp.getPid()));
+		UpdateVo updateVo = securityComponent.isAuthorityUpdateEmp(emp, updateEmp, TypeEnum.ADD);
 		if (updateVo.isBl()) {
 			return empService.register(updateEmp);
 		}
@@ -41,9 +49,10 @@ public class EmpController {
 	@PostMapping("/update")
 	public UpdateVo update(@RequestBody Emp updateEmp, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("empSession");
-		Emp updateEmp1 = empService.queryByUsername(updateEmp.getUsername());
-		System.out.println(updateEmp);
-		UpdateVo updateVo = SecurityComponent.isUpdateAuthority(emp, updateEmp1.getPosition().getName());
+		// 必须执行查收若直接使用updateEmp将会导致position为null
+		Emp udpate = empService.queryById(updateEmp.getId());
+		udpate.setPosition(positionService.queryById(updateEmp.getPid()));
+		UpdateVo updateVo = securityComponent.isAuthorityUpdateEmp(emp, udpate, TypeEnum.UDPATE);
 		if (updateVo.isBl()) {
 			return empService.update(updateEmp);
 		}
@@ -51,8 +60,14 @@ public class EmpController {
 	}
 
 	@GetMapping("/delete")
-	public boolean delete(Integer id) {
-		return empService.delete(id);
+	public UpdateVo delete(Integer id, HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		Emp updateEmp = empService.queryById(id);
+		UpdateVo updateVo = securityComponent.isAuthorityUpdateEmp(emp, updateEmp, TypeEnum.UDPATE);
+		if (updateVo.isBl()) {
+			return empService.delete(id);
+		}
+		return updateVo;
 	}
 
 	@RequestMapping("/queryList")
@@ -98,21 +113,11 @@ public class EmpController {
 		session.removeAttribute("empSession");
 		return true;
 	}
-
-	/**
-	 * 验证更新权限
-	 * 
-	 * @param updateEmp
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(@RequestBody(required = false) Emp updateEmp, HttpSession session) {
+	
+	@RequestMapping("/getAuthoritys")
+	public List<Authority> getAuthoritys(HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("empSession");
-		if (updateEmp != null) {
-			updateEmp = empService.queryByUsername(updateEmp.getUsername());
-		}
-		return SecurityComponent.isAuthority(emp, updateEmp);
+		return authorityService.queryByEmpAndModule(emp, ModuleEnum.EMP_MANAGER);
 	}
 
 }

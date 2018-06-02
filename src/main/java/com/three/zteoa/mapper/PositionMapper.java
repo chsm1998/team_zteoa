@@ -4,7 +4,6 @@ import com.three.zteoa.bean.Position;
 import com.three.zteoa.bean.PositionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
 
 public interface PositionMapper {
     long countByExample(PositionExample example);
@@ -16,8 +15,6 @@ public interface PositionMapper {
     int insert(Position record);
 
     int insertSelective(Position record);
-
-    List<Position> selectByExampleWithRowbounds(PositionExample example, RowBounds rowBounds);
 
     List<Position> selectByExample(PositionExample example);
 

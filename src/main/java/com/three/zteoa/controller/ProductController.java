@@ -5,10 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.three.zteoa.bean.Emp;
@@ -16,7 +14,6 @@ import com.three.zteoa.bean.Product;
 import com.three.zteoa.bean.ProductCategory;
 import com.three.zteoa.component.SecurityComponent;
 import com.three.zteoa.service.ProductService;
-import com.three.zteoa.tools.PageSupport;
 import com.three.zteoa.vo.UpdateVo;
 
 @RestController
@@ -24,6 +21,7 @@ import com.three.zteoa.vo.UpdateVo;
 public class ProductController {
 	@Resource
 	private ProductService productService;
+	
 
 	@RequestMapping("/queryList")
 	// 分页查看商品
@@ -72,18 +70,6 @@ public class ProductController {
 	// 查询商品类别id
 	public List<ProductCategory> getpcById(Integer id) throws Exception {
 		return productService.selectpcById(id);
-	}
-
-	/**
-	 * 鉴权
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityProduct(emp);
 	}
 
 	/**

@@ -1,25 +1,25 @@
 package com.three.zetoa.test;
 
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.three.zteoa.bean.Emp;
-import com.three.zteoa.bean.Position;
 import com.three.zteoa.component.SecurityComponent;
-import com.three.zteoa.myenum.PositionEnum;
-import com.three.zteoa.vo.UpdateVo;
+import com.three.zteoa.myenum.TypeEnum;
+import com.three.zteoa.service.EmpService;
 
-public class TestEnum {
+public class TestEnum extends BaseTest{
 
-	public static void main(String[] args) {
-		Emp emp = new Emp();
-		Emp updateEmp = new Emp();
-		Position position1 = new Position();
-		position1.setName(PositionEnum.MANAGER.getName());
-		Position position2 = new Position();
-		position2.setName(PositionEnum.MANAGER.getName());
-		emp.setPosition(position1);
-		updateEmp.setPosition(position2);
-		UpdateVo updateVo = SecurityComponent.isAuthority(emp, updateEmp);
-		updateVo = SecurityComponent.isUpdateAuthority(emp, PositionEnum.MANAGER.getName());
-		System.out.println(updateVo);
+	@Autowired
+	private SecurityComponent securityComponent;
+	@Autowired
+	private EmpService empService;
+	
+	@Test
+	public void test() {
+//		Emp emp = empService.queryByUsername("admin");
+//		System.out.println(emp);
+//		System.out.println(securityComponent.isAuthorityUpdateEmp(empService.queryByUsername("1"), empService.queryByUsername("1"), TypeEnum.QUERY));
 	}
 
 }

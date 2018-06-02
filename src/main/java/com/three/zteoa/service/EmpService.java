@@ -104,8 +104,11 @@ public class EmpService {
 	 * @param id
 	 * @return
 	 */
-	public boolean delete(Integer id) {
-		return ToBoolean.intToBool(empMapper.deleteByPrimaryKey(id), 1);
+	public UpdateVo delete(Integer id) {
+		if (empMapper.deleteByPrimaryKey(id) == 1) {
+			return new UpdateVo("删除成功", true);
+		}
+		return new UpdateVo("删除失败，服务器异常", false);
 	}
 
 	/**
@@ -167,21 +170,18 @@ public class EmpService {
 
 	private List<Emp> getEmps(Emp emp) {
 		List<Emp> emps = empMapper.selectByExample(getEmpExample(emp));
-		List<Dept> depts = deptMapper.selectByExample(null);
-		List<Position> positions = positionMapper.selectByExample(null);
 		for (Emp emp2 : emps) {
-			for (Dept dept : depts) {
-				if (emp2.getDid().equals(dept.getId())) {
-					emp2.setDept(dept);
-				}
-			}
-			for (Position position : positions) {
-				if (emp2.getPid().equals(position.getId())) {
-					emp2.setPosition(position);
-				}
-			}
+			emp2.setDept(deptMapper.selectByPrimaryKey(emp2.getDid()));
+			emp2.setPosition(positionMapper.selectByPrimaryKey(emp2.getPid()));
 		}
 		return emps;
+	}
+	
+	public Emp queryById(Integer id) {
+		Emp emp = empMapper.selectByPrimaryKey(id);
+		emp.setDept(deptMapper.selectByPrimaryKey(emp.getDid()));
+		emp.setPosition(positionMapper.selectByPrimaryKey(emp.getPid()));
+		return emp;
 	}
 
 }

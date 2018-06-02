@@ -66,18 +66,6 @@ public class ProductCategoryController {
 		return productCategoryService.queryAll();
 	}
 	
-	/**
-	 * 鉴权
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/isAuthority")
-	public UpdateVo isAuthority(HttpSession session) {
-		Emp emp = (Emp) session.getAttribute("empSession");
-		return SecurityComponent.isAuthorityProduct(emp);
-	}
-	
 	@RequestMapping("/queryTotal")
 	public int queryTotal(@RequestBody(required = false) ProductCategory productCategory) {
 		return productCategoryService.queryTotal(productCategory);

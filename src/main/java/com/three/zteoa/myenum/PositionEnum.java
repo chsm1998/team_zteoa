@@ -7,7 +7,7 @@ package com.three.zteoa.myenum;
  */
 public enum PositionEnum {
 
-	MANAGER("部门经理", 3), STAFF("普通员工", 1), GENERALMANAGER("总经理", 4), CASHIER("财务", 2);
+	STAFF("普通员工", 1), CASHIER("财务", 1), MANAGER("部门经理", 2), GENERALMANAGER("总经理", 3);
 
 	private String name;
 	private Integer title;

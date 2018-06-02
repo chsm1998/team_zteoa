@@ -12,6 +12,7 @@ import com.three.zteoa.bean.BoardroomApply;
 import com.three.zteoa.bean.Emp;
 import com.three.zteoa.mapper.BoardroomApplyMapper;
 import com.three.zteoa.service.BoardroomApplyService;
+import com.three.zteoa.vo.UpdateVo;
 /**
  * @author	Vintonsen_lcx
  * @date	2018年5月30日 
@@ -24,12 +25,15 @@ public class BoardroomApplyServiceImpl implements BoardroomApplyService{
 	@Resource
 	private BoardroomApplyMapper boardroomApplyMapper;
 	@Override
-	public boolean addBoardrommApply(BoardroomApply boardroomApply) throws Exception {
+	public UpdateVo addBoardrommApply(BoardroomApply boardroomApply) throws Exception {
 		boardroomApply.setAgree(1);
 		Date date = new Date();
 		boardroomApply.setCreateTime(date);
 		boardroomApply.setModifyTime(date);
-		return boardroomApplyMapper.addBoardroomApply(boardroomApply);
+		if (boardroomApplyMapper.addBoardroomApply(boardroomApply)) {
+			return new UpdateVo("添加申请成功", true);
+		}
+		return new UpdateVo("添加申请失败，服务器异常", false);
 	}
 
 	@Override
