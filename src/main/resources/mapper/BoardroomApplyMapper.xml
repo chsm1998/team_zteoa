@@ -9,6 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="ename" property="emp.name"/>
 	</resultMap>
 	
+	<select id="isTime" resultType="BoardroomApply">
+		SELECT * FROM zteoa_boardroom_apply WHERE (start BETWEEN #{start} AND #{end} 
+		OR end BETWEEN #{start} AND #{end}) AND agree = 2 AND bid = #{bid};
+	</select>
+	
 	<!-- 增加会议室申请 -->
 	<insert id="addBoardroomApply" parameterType="BoardroomApply">
 		insert into zteoa_boardroom_apply(start,end,eid,bid,agree,create_time,modify_time)
@@ -73,6 +78,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</trim>		 
 	</select>
+	
+	
 	
 	
 </mapper>

@@ -38,5 +38,15 @@ public enum ModuleEnum {
 		}
 		return null;
 	}
+	
+	public static ModuleEnum getModuleEnumById(Integer id) {
+		ModuleEnum[] values = ModuleEnum.values();
+		for (ModuleEnum moduleEnum : values) {
+			if (moduleEnum.getId() == id) {
+				return moduleEnum;
+			}
+		}
+		return null;
+	}
 
 }

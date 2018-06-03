@@ -49,7 +49,7 @@ public class EmpController {
 	@PostMapping("/update")
 	public UpdateVo update(@RequestBody Emp updateEmp, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("empSession");
-		// 必须执行查收若直接使用updateEmp将会导致position为null
+		// 必须执行查询若直接使用updateEmp将会导致position为null
 		Emp udpate = empService.queryById(updateEmp.getId());
 		udpate.setPosition(positionService.queryById(updateEmp.getPid()));
 		UpdateVo updateVo = securityComponent.isAuthorityUpdateEmp(emp, udpate, TypeEnum.UDPATE);

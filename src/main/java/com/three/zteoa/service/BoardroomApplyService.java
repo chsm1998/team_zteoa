@@ -41,4 +41,11 @@ public interface BoardroomApplyService {
 	 * @return
 	 */
 	List<BoardroomApply> getApplyByEid(Emp emp);
+	
+	/**
+	 * 判断时间是否符合要求
+	 * @param boardroomApply
+	 * @return
+	 */
+	boolean isTime(BoardroomApply boardroomApply);
 }

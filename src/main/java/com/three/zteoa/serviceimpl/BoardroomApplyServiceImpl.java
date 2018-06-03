@@ -84,4 +84,12 @@ public class BoardroomApplyServiceImpl implements BoardroomApplyService{
 		return boardroomApplyMapper.getApplyByEid(emp);
 	}
 
+	@Override
+	public boolean isTime(BoardroomApply boardroomApply) {
+		if (boardroomApplyMapper.isTime(boardroomApply).size() == 0) {
+			return true;
+		}
+		return false;
+	}
+
 }

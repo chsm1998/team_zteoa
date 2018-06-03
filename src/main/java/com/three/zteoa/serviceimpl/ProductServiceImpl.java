@@ -76,4 +76,9 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.queryAll();
 	}
 
+	@Override
+	public Product queryById(Integer id) {
+		return productMapper.queryById(id);
+	}
+
 }

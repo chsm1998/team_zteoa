@@ -100,7 +100,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.three.zteoa.bean.Position">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.three.zteoa.bean.Position">
     insert into zteoa_position (id, rank, bid, 
       name, create_time, modify_time
       )

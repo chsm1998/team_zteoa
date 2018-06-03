@@ -59,12 +59,12 @@ public class SecurityComponent {
 	 * @param typeEnum
 	 * @return
 	 */
-	public UpdateVo isAuthorityUpdate(Emp emp, TypeEnum typeEnum) {
+	public UpdateVo isAuthorityUpdate(Emp emp, ModuleEnum moduleEnum, TypeEnum typeEnum) {
 		// 系统管理员放行
 		if (emp.getPid() == null) {
 			return SUCCESS;
 		}
-		if (!authorityService.queryByEmpAndModule(emp, ModuleEnum.EMP_MANAGER, typeEnum)) {
+		if (!authorityService.queryByEmpAndModule(emp, moduleEnum, typeEnum)) {
 			return NOT_AUTHORITY;
 		}
 		return SUCCESS;

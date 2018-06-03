@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="pid!=null">pid = #{pid},</if>
 			<if test="num!=null">num = #{num},</if>
 			<if test="bid!=null">bid = #{bid},</if>
-			<if test="modify_time!=null">modify_time = #{modifyTime},</if>
+			<if test="modifyTime!=null">modify_time = #{modifyTime},</if>
 		</trim>
 	</update>
 	<!-- 根据id查询会议设施 -->

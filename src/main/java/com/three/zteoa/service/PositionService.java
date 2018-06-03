@@ -1,5 +1,6 @@
 package com.three.zteoa.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,11 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
+import com.three.zteoa.bean.Authority;
 import com.three.zteoa.bean.EmpExample;
+import com.three.zteoa.bean.Module;
 import com.three.zteoa.bean.Position;
 import com.three.zteoa.bean.PositionExample;
 import com.three.zteoa.mapper.EmpMapper;
 import com.three.zteoa.mapper.PositionMapper;
+import com.three.zteoa.myenum.TypeEnum;
 import com.three.zteoa.util.PageUtil;
 import com.three.zteoa.util.ToBoolean;
 import com.three.zteoa.vo.UpdateVo;
@@ -23,9 +27,12 @@ public class PositionService {
 
 	@Autowired
 	private PositionMapper positionMapper;
-
 	@Autowired
 	private EmpMapper empMapper;
+	@Autowired
+	private ModuleService moduleService;
+	@Autowired
+	private AuthorityService authorityService;
 
 	/**
 	 * 添加职位
@@ -37,7 +44,16 @@ public class PositionService {
 		Date date = new Date();
 		position.setCreateTime(date);
 		position.setModifyTime(date);
-		return ToBoolean.intToBool(positionMapper.insert(position), 1);
+		int rank = 1;
+		if (position.getName().contains("经理")) {
+			rank = 2;
+		}
+		position.setRank(rank);
+		boolean bl = positionMapper.insert(position) == 1;
+		if (bl) {
+			addAuthority(position);
+		}
+		return bl;
 	}
 	
 	public Position queryById(Integer id) {
@@ -122,6 +138,46 @@ public class PositionService {
 	 */
 	public List<Position> queryAll() {
 		return positionMapper.selectByExample(null);
+	}
+	
+	private void addAuthority(Position position) {
+		List<Module> modules = moduleService.queryAll();
+		modules.forEach(module -> {
+				boolean[] bls = null;
+				if (position.getRank() == 1) {
+					if (module.getId() == 8 || module.getId() == 9) {
+						bls = new boolean[] { true, false, false, true };
+					} else {
+						bls = new boolean[] { true, false, false, false };
+					}
+				} else {
+					if (module.getId() == 2 || module.getId() == 3) {
+						if (position.getRank() == 3) {
+							bls = new boolean[] { true, true, true, true };
+						} else {
+							bls = new boolean[] { true, false, false, false };
+						}
+					} else {
+						bls = new boolean[] { true, true, true, true };
+					}
+				}
+				getAuthoritys(module.getId(), position.getId(), bls).forEach(authority -> {
+					authorityService.add(authority);
+				});
+		});
+	}
+	
+	private List<Authority> getAuthoritys(Integer mid, Integer pid, boolean[] bls) {
+		Authority query = new Authority(mid, pid, bls[0], TypeEnum.QUERY.getId());
+		Authority update = new Authority(mid, pid, bls[1], TypeEnum.UDPATE.getId());
+		Authority delete = new Authority(mid, pid, bls[2], TypeEnum.DELETE.getId());
+		Authority add = new Authority(mid, pid, bls[3], TypeEnum.ADD.getId());
+		List<Authority> authorities = new ArrayList<>();
+		authorities.add(query);
+		authorities.add(update);
+		authorities.add(delete);
+		authorities.add(add);
+		return authorities;
 	}
 
 }

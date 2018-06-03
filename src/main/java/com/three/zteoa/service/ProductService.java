@@ -38,4 +38,6 @@ public interface ProductService {
 	int getTotal(Product product);
 	
 	List<Product> queryAll();
+	
+	Product queryById(Integer id);
 }

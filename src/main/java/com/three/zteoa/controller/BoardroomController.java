@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.three.zteoa.bean.Authority;
 import com.three.zteoa.bean.Boardroom;
 import com.three.zteoa.bean.Emp;
 import com.three.zteoa.component.SecurityComponent;
+import com.three.zteoa.myenum.ModuleEnum;
+import com.three.zteoa.myenum.TypeEnum;
+import com.three.zteoa.service.AuthorityService;
 import com.three.zteoa.service.BoardroomService;
 import com.three.zteoa.vo.UpdateVo;
 
@@ -24,6 +29,10 @@ import com.three.zteoa.vo.UpdateVo;
 public class BoardroomController {
 	@Resource
 	private BoardroomService boardroomService;
+	@Autowired
+	private SecurityComponent securityComponent;
+	@Autowired
+	private AuthorityService authorityService;
 
 	// 会议室列表
 	@RequestMapping("/queryList")
@@ -33,20 +42,44 @@ public class BoardroomController {
 
 	// 增加会议室
 	@RequestMapping("/add")
-	public boolean addboardroomSave(@RequestBody Boardroom boardroom) throws Exception {
-		return boardroomService.addBoardroom(boardroom);
+	public UpdateVo addboardroomSave(@RequestBody Boardroom boardroom, HttpSession session) throws Exception {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		UpdateVo updateVo = securityComponent.isAuthorityUpdate(emp, ModuleEnum.BOARDROOM_MANAGER, TypeEnum.ADD);
+		if (updateVo.isBl()) {
+			if (boardroomService.addBoardroom(boardroom)) {
+				return new UpdateVo("添加会议室成功", true);
+			}
+			return new UpdateVo("添加会议室失败，服务器异常", false);
+		}
+		return updateVo;
 	}
 
 	// 修改会议室
 	@RequestMapping("/update")
-	public boolean updateboardroomSave(@RequestBody Boardroom boardroom) throws Exception {
-		return boardroomService.updateBoardroom(boardroom);
+	public UpdateVo updateboardroomSave(@RequestBody Boardroom boardroom, HttpSession session) throws Exception {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		UpdateVo updateVo = securityComponent.isAuthorityUpdate(emp, ModuleEnum.BOARDROOM_MANAGER, TypeEnum.UDPATE);
+		if (updateVo.isBl()) {
+			if (boardroomService.updateBoardroom(boardroom)) {
+				return new UpdateVo("修改会议室成功", true);
+			}
+			return new UpdateVo("修改会议室失败，服务器异常", false);
+		}
+		return updateVo;
 	}
 
 	// 删除会议室
 	@RequestMapping("/delete")
-	public Object deleteboardroom(Integer id) throws Exception {
-		return boardroomService.deleteBoardroom(id);
+	public UpdateVo deleteboardroom(Integer id, HttpSession session) throws Exception {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		UpdateVo updateVo = securityComponent.isAuthorityUpdate(emp, ModuleEnum.BOARDROOM_MANAGER, TypeEnum.DELETE);
+		if (updateVo.isBl()) {
+			if (boardroomService.deleteBoardroom(id)) {
+				return new UpdateVo("删除会议室成功", true);
+			}
+			return new UpdateVo("删除会议室失败，服务器异常", false);
+		}
+		return updateVo;
 	}
 
 	// 会议室据id查询
@@ -71,6 +104,12 @@ public class BoardroomController {
 	@RequestMapping("/queryAll")
 	public List<Boardroom> queryAll() {
 		return boardroomService.queryAll();
+	}
+
+	@RequestMapping("/getAuthoritys")
+	public List<Authority> getAuthoritys(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		return authorityService.queryByEmpAndModule(emp, ModuleEnum.BOARDROOM_MANAGER);
 	}
 
 }

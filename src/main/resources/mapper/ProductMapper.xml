@@ -83,8 +83,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.id=#{id}
 	</select>
 	
-	<select id="queryAll" resultType="Product">
-		SELECT * FROM zteoa_product
+	<select id="queryAll" resultMap="myProduct">
+		select p.*,pc.id pcid,pc.category from zteoa_product p,zteoa_product_category pc
+		WHERE pc.id = p.category_id;
 	</select>
 	
 	<select id="queryById" resultType="Product">
