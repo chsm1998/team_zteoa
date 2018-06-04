@@ -129,7 +129,10 @@ public class ProductController {
 	@RequestMapping("/getAuthoritys")
 	public List<Authority> getAuthoritys(HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("empSession");
-		return authorityService.queryByEmpAndModule(emp, ModuleEnum.PRODUCT_MANAGER);
+		if (emp != null) {
+			return authorityService.queryByEmpAndModule(emp, ModuleEnum.PRODUCT_MANAGER);
+		}
+		return null;
 	}
 	
 	@RequestMapping("/isMaxNum")
@@ -138,5 +141,18 @@ public class ProductController {
 			return true;
 		}
 		return false;
+	}
+	
+	@RequestMapping("/warning")
+	public List<Product> getMinNum(HttpSession session) {
+		Emp emp = (Emp) session.getAttribute("empSession");
+		if (emp == null) {
+			return null;
+		}
+		UpdateVo updateVo = securityComponent.isAuthorityUpdate(emp, ModuleEnum.PRODUCT_MANAGER, TypeEnum.ADD);
+		if (updateVo.isBl()) {
+			return productService.queryMinNum();
+		}
+		return null;
 	}
 }

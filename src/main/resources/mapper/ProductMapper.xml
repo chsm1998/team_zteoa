@@ -88,6 +88,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE pc.id = p.category_id;
 	</select>
 	
+	<select id="queryMinNum" resultType="Product">
+		SELECT * FROM zteoa_product WHERE num <![CDATA[ < ]]> 100
+	</select>
+	
 	<select id="queryById" resultType="Product">
 		SELECT * FROM zteoa_product WHERE id = #{id}
 	</select>

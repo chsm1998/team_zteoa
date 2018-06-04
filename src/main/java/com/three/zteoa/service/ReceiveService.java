@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.three.zteoa.bean.Receive;
+import com.three.zteoa.vo.UpdateVo;
 
 /**
  * @author Vintonsen_lcx
@@ -22,7 +23,7 @@ public interface ReceiveService {
 	public boolean deleteReceivesById(@Param("receive") Integer receive_id) throws Exception;
 
 	// 修改办公用品申请信息
-	public boolean modifyReceive(Receive receive) throws Exception;
+	public UpdateVo modifyReceive(Receive receive) throws Exception;
 
 	// 通过条件查询-记录数查询
 	public int getReceiveCount(Receive receive) throws Exception;

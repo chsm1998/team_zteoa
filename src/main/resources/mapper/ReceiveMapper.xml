@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND pid = #{pid}
 			</if>
 		</where>
-		LIMIT #{currPage},#{pageSize}
+		ORDER BY modify_time DESC LIMIT #{currPage},#{pageSize}
 	</select>
 
 	<!-- 根据id查询办公用品申请 -->

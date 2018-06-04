@@ -81,4 +81,9 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.queryById(id);
 	}
 
+	@Override
+	public List<Product> queryMinNum() {
+		return productMapper.queryMinNum();
+	}
+
 }

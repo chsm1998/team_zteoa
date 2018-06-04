@@ -27,6 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="bid != null">
 			and z.bid = #{bid}
 		</if>
+		<if test="zProductName != null and zProductName != ''">
+			and p.name LIKE CONCAT ('%',#{zProductName},'%')
+		</if>
 		order by create_time DESC limit #{currPage},#{pageSize}
 		
 	</select>
@@ -53,12 +56,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 	</update>
 	<!-- 根据id查询会议设施 -->
-	<select id="getBoardroomFacById" parameterType="int"	resultType="BoardroomFacilities">
+	<select id="getBoardroomFacById" resultType="BoardroomFacilities">
 		SELECT z.*,b.name AS zBroomName,p.name AS zProductName 
 		FROM zteoa_boardroom_facilities z,zteoa_boardroom b,zteoa_product p 
 		WHERE z.bid = b.id AND z.pid = p.id
 		<if test="id != null">
 			z.id = #{id}
 		</if>
+	</select>
+	
+	<select id="queryByPid" resultType="BoardroomFacilities">
+		SELECT * FROM zteoa_boardroom_facilities WHERE pid = #{pid}
 	</select>
 </mapper>

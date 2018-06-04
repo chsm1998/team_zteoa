@@ -25,9 +25,10 @@ public interface BoardroomFacMapper {
 	public boolean deleteBoardroomFac(@Param("id") int id) throws Exception;
 
 	// 会议设施的修改
-	public boolean updateBoardroomFac(BoardroomFacilities boardroomFacilties) throws Exception;
+	public boolean updateBoardroomFac(BoardroomFacilities boardroomFacilties);
 
 	// 根据id查询会议设施
 	public BoardroomFacilities getBoardroomFacById(@Param("id") int id) throws Exception;
 
+	public BoardroomFacilities queryByPid(@Param("pid") int pid);
 }

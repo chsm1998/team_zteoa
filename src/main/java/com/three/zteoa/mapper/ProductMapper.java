@@ -37,7 +37,22 @@ public interface ProductMapper {
 	 */
 	int getTotal(Product product);
 	
+	/**
+	 * 查询所有商品
+	 * @return
+	 */
 	List<Product> queryAll();
 	
+	/**
+	 * 通过id查询用品
+	 * @param id
+	 * @return
+	 */
 	Product queryById(@Param("id") Integer id);
+	
+	/**
+	 * 库存告警
+	 * @return
+	 */
+	List<Product> queryMinNum();
 }

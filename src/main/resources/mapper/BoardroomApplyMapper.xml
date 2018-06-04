@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bid != null">
 				AND bid = #{bid}
 			</if>
-			order by create_time DESC limit #{currPage},#{pageSize}
+			order by modify_time DESC limit #{currPage},#{pageSize}
 		</trim>
 	</select>
 	

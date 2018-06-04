@@ -40,4 +40,10 @@ public interface ProductService {
 	List<Product> queryAll();
 	
 	Product queryById(Integer id);
+	
+	/**
+	 * 库存告警
+	 * @return
+	 */
+	List<Product> queryMinNum();
 }

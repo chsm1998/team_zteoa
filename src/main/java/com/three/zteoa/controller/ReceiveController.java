@@ -67,10 +67,7 @@ public class ReceiveController {
 		Emp emp = (Emp) session.getAttribute("empSession");
 		UpdateVo updateVo = securityComponent.isAuthorityUpdate(emp, ModuleEnum.PRODUCT_APPLY, TypeEnum.UDPATE);
 		if (updateVo.isBl()) {
-			if (receiveSeivice.modifyReceive(receive)) {
-				return new UpdateVo("审核状态更新成功", true);
-			}
-			return new UpdateVo("审核状态更新失败，服务器异常", false);
+			return receiveSeivice.modifyReceive(receive);
 		}
 		return updateVo;
 	}
@@ -78,10 +75,7 @@ public class ReceiveController {
 	@RequestMapping("/newUpdate")
 	// 修改办公用品申请信息
 	public UpdateVo newModifyReceive(@RequestBody Receive receive) throws Exception {
-		if (receiveSeivice.modifyReceive(receive)) {
-			return new UpdateVo("办公申请信息更新成功", true);
-		}
-		return new UpdateVo("办公申请信息更新失败，服务器异常", false);
+		return receiveSeivice.modifyReceive(receive);
 	}
 
 	@RequestMapping("queryList")
